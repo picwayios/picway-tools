@@ -1,0 +1,47 @@
+{
+  "name": "picway-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser tools for photos and videos: compress, convert, resize, crop, blur, collage and edit metadata. Files are processed in your browser.",
+  "license": "MIT",
+  "author": "PicWay (https://picway.app)",
+  "homepage": "https://picway.app/tools/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/picwayapp/picway-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/picwayapp/picway-tools/issues"
+  },
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test \"tests/*.test.mjs\"",
+    "test:browser": "node tests/browser/run.mjs"
+  },
+  "dependencies": {
+    "@jsquash/avif": "2.1.1",
+    "@jsquash/webp": "1.5.0",
+    "@picway-tools/core": "*",
+    "exifr": "7.1.3",
+    "gifenc": "1.0.3",
+    "libheif-js": "1.23.5",
+    "mp4-muxer": "5.2.2",
+    "mp4box": "2.5.0",
+    "piexifjs": "1.0.6",
+    "upng-js": "2.1.0",
+    "utif": "3.1.0"
+  },
+  "devDependencies": {
+    "playwright-core": "1.49.1",
+    "vite": "6.4.5"
+  },
+  "engines": {
+    "node": ">=22.6"
+  }
+}

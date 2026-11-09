@@ -1,0 +1,34 @@
+{
+  "audioTracks": [],
+  "tracks": [
+    {
+      "id": 1,
+      "codec": "hvc1.1.6.L123.b0",
+      "type": "video",
+      "video": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "id": 2,
+      "codec": "lpcm",
+      "type": "metadata"
+    },
+    {
+      "id": 3,
+      "codec": "mebx",
+      "type": "metadata"
+    },
+    {
+      "id": 4,
+      "codec": "mebx",
+      "type": "metadata"
+    },
+    {
+      "id": 5,
+      "codec": "mebx",
+      "type": "metadata"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@picway-tools/core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Processing code behind the PicWay browser tools: image decode and encode, EXIF and GPS handling, video remux and transcode with WebCodecs, GIF encode and decode, ZIP.",
+  "license": "MIT",
+  "author": "PicWay (https://picway.app)",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*"
+  }
+}

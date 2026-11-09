@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit photo metadata · PicWay Tools</title>
+    <meta name="description" content="View a photo’s metadata in your browser, then change its GPS location, date and time taken, time zone or camera fields if you need to, and save a new JPG." />
+    <link rel="stylesheet" href="../../web/tool.css" />
+  </head>
+  <body>
+    <main class="page">
+      <p class="crumb"><a href="../../">PicWay Tools</a></p>
+      <h1>Edit photo metadata</h1>
+      <p class="lede">Change a photo’s date, time or location.</p>
+      <section class="tool" id="tool" aria-label="Edit photo metadata">
+        <div data-tool="edit-photo-metadata" data-lang="en" data-load-fail="This tool couldn’t load. Reload the page and try again."></div>
+        <noscript><p>This tool needs JavaScript to run in your browser.</p></noscript>
+      </section>
+      <p class="privacy">The photo file is processed inside your browser, and this page has no server that receives it. If you search for a place, the name you type is sent to OpenStreetMap’s Nominatim service. Showing the map requests map tiles around the pin from OpenStreetMap’s tile server (tile.openstreetmap.org), which tells it that approximate location.</p>
+      <section class="steps" aria-labelledby="steps-h">
+        <h2 id="steps-h">How to use it</h2>
+        <ol>
+      <li><h3>Choose the photo</h3><p>Pick a JPG or HEIC photo. The page reads its location, date, time zone and camera fields and shows them as the original values.</p></li>
+      <li><h3>Change what you need</h3><p>Click the map, search for a place or type coordinates. Set a new date and time. The time zone is optional. Edit the camera, author or description if you want.</p></li>
+      <li><h3>Save the new photo</h3><p>Save the edited photo. The page reads the new file back and shows the location and date it now holds.</p></li>
+        </ol>
+      </section>
+      <footer class="foot">
+        <p>This tool is also online at <a href="https://picway.app/tools/edit-photo-metadata/">picway.app/tools/edit-photo-metadata/</a>.</p>
+        <p>Open source under the MIT License. Third-party licenses: THIRD_PARTY_NOTICES.md in the repository.</p>
+      </footer>
+    </main>
+    <script type="module" src="../../web/boot.ts"></script>
+  </body>
+</html>

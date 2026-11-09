@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Remove photo location · PicWay Tools</title>
+    <meta name="description" content="A photo metadata remover in your browser: see what a photo reveals, then remove its GPS location, or all EXIF if you choose. JPG files are not re-encoded." />
+    <link rel="stylesheet" href="../../web/tool.css" />
+  </head>
+  <body>
+    <main class="page">
+      <p class="crumb"><a href="../../">PicWay Tools</a></p>
+      <h1>Remove photo location</h1>
+      <p class="lede">Take the GPS location out of a photo before you share it.</p>
+      <section class="tool" id="tool" aria-label="Remove photo location">
+        <div data-tool="remove-photo-location" data-lang="en" data-load-fail="This tool couldn’t load. Reload the page and try again."></div>
+        <noscript><p>This tool needs JavaScript to run in your browser.</p></noscript>
+      </section>
+      <p class="privacy">The photo is read and cleaned by your browser, inside this page. This page has no server that receives your photo.</p>
+      <section class="steps" aria-labelledby="steps-h">
+        <h2 id="steps-h">How to use it</h2>
+        <ol>
+      <li><h3>Choose your photos</h3><p>Tap the box above and pick JPG or HEIC photos, or drop them on it. The page first lists what each photo contains.</p></li>
+      <li><h3>Choose what to remove</h3><p>“Remove location” is on by default. Turn on “Remove everything” to also drop camera, lens and date info.</p></li>
+      <li><h3>Check and download</h3><p>Each new file is read again to confirm the location is gone. Then download it, or take everything in one ZIP.</p></li>
+        </ol>
+      </section>
+      <footer class="foot">
+        <p>This tool is also online at <a href="https://picway.app/tools/remove-photo-location/">picway.app/tools/remove-photo-location/</a>.</p>
+        <p>Open source under the MIT License. Third-party licenses: THIRD_PARTY_NOTICES.md in the repository.</p>
+      </footer>
+    </main>
+    <script type="module" src="../../web/boot.ts"></script>
+  </body>
+</html>
