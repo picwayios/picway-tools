@@ -82,4 +82,4 @@ These tools are made by [PicWay](https://picway.app/), an iPhone app for sorting
 
 ## License
 
-MIT, see [LICENSE](LICENSE). The tools use open-source libraries under their own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+PicWay’s own code is MIT-licensed; see [LICENSE](LICENSE). The open-source libraries the tools use keep their own licenses, and libheif-js is LGPL-3.0; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
