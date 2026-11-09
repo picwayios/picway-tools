@@ -7,11 +7,17 @@
 //    by an inert stand-in and the map and place-search controls are left out of the page.
 //    Coordinates can still be typed or pasted. Every edit must match exactly once, or the
 //    build stops, so a change in the source can't slip through unnoticed.
+// 3. libheif-js (LGPL-3.0) is not bundled: the import points at libheif/libheif-bundle.mjs in
+//    the extension, and the build copies the npm package's file there unchanged, so it can be
+//    replaced with another build of libheif-js.
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, sep } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const ANCHOR = resolve(here, '..', 'package.json');
+
+const LIBHEIF = 'libheif-js/libheif-wasm/libheif-bundle.mjs';
+export const LIBHEIF_OUT = 'libheif/libheif-bundle.mjs';
 
 const OFFLINE_MAP = '\0picway-offline-map';
 const OFFLINE_MAP_CODE = `
@@ -42,11 +48,17 @@ const isMapImport = (source) => source === './lib/map.ts' || source === '@picway
 export function toolsPlugin(toolsSrc, coreDir) {
   const root = resolve(toolsSrc) + sep;
   const applied = [];
+  const libheif = { file: null };
   return {
     name: 'picway-tools',
     enforce: 'pre',
     async resolveId(source, importer, opts) {
       if (!importer || !importer.startsWith(root)) return null;
+      if (source === LIBHEIF) {
+        libheif.file = (await this.resolve(source, ANCHOR, { ...opts, skipSelf: true }))?.id ?? null;
+        if (!libheif.file) throw new Error(`can't find ${LIBHEIF}`);
+        return { id: `/${LIBHEIF_OUT}`, external: 'absolute' };
+      }
       if (isMapImport(source) && toolOf(importer) === 'edit-photo-metadata') return OFFLINE_MAP;
       if (source.startsWith('@picway-tools/core/')) return resolve(coreDir, source.slice('@picway-tools/core/'.length));
       if (source.startsWith('.') || source.startsWith('/') || source.startsWith('\0')) return null;
@@ -69,6 +81,6 @@ export function toolsPlugin(toolsSrc, coreDir) {
       applied.push(name);
       return { code: out, map: null };
     },
-    api: { applied },
+    api: { applied, libheif },
   };
 }

@@ -9,7 +9,7 @@ Four extensions for Chrome and Microsoft Edge that put the [PicWay web tools](ht
 | PicWay Photo Location & Metadata | View, change or remove the location and other metadata stored in photos. | Remove photo location, Edit photo metadata |
 | PicWay Photo Editor | Crop, resize, blur or pixelate, add a border or combine photos into a collage. | Crop image, Resize images, Blur image, Photo border, Photo collage |
 
-Click an extension's toolbar button to open its tools page in a new tab, or to switch to that tab if it is already open. On the page, each tool has its own tab. Each tool does the same job as its page on picway.app. One difference: in the extension, Edit photo metadata has no map or place search, so you type or paste the coordinates.
+Click an extension's toolbar button to open its tools page in a new tab, or to switch to that tab if it is already open. On the page, each tool has its own tab. Each tool does the same job as its page on picway.app. One difference: in the extension, Edit photo metadata has no map or place search, so you type or paste the coordinates. Links to picway.app open in a new tab only when you click them.
 
 ## How it is built
 
@@ -43,4 +43,4 @@ PicWay is an iPhone app for sorting your photos. Swipe left or right to decide w
 
 ## License
 
-MIT, like the rest of this repository. Each extension package includes `third-party-notices.txt`, made from `THIRD_PARTY_NOTICES.md` and the `licenses/` folder at the root of this repository, for the libraries that extension bundles.
+PicWay’s own code is MIT-licensed (`LICENSE` at the root of this repository). The libraries each extension bundles keep their own licenses. libheif-js (LGPL-3.0) is shipped unmodified as its own file, `libheif/libheif-bundle.mjs`; see “In the browser extensions” in `THIRD_PARTY_NOTICES.md`. Each extension package includes `third-party-notices.txt`, made from `THIRD_PARTY_NOTICES.md` and the `licenses/` folder at the root of this repository, for the libraries that extension bundles.

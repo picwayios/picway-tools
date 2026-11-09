@@ -17,24 +17,6 @@
       }
     ]
   },
-  "compress-gif": {
-    "name": "Compress GIF",
-    "benefit": "Make an animated GIF smaller.",
-    "steps": [
-      {
-        "name": "Choose the GIF",
-        "text": "Tap the box above and pick a GIF. The page shows its size in pixels, how many frames it has, how long it runs and how big the file is."
-      },
-      {
-        "name": "Pick the settings",
-        "text": "Choose Light, Medium or Heavy compression, a size, and whether to keep every frame or only 1 frame in 2 or 3."
-      },
-      {
-        "name": "Compress and download",
-        "text": "Press Compress GIF and keep the tab open. The page shows the new GIF and its file size next to the original’s, then offers it to download."
-      }
-    ]
-  },
   "compress-image": {
     "name": "Compress images",
     "benefit": "Make images smaller, by quality or a target size.",
@@ -71,24 +53,6 @@
       }
     ]
   },
-  "compress-video-to-size": {
-    "name": "Compress video to a size",
-    "benefit": "Compress a video to a size you choose, such as 10 MB.",
-    "steps": [
-      {
-        "name": "Choose the video",
-        "text": "Tap the box above and pick an MP4 or MOV from your iPhone, camera or a screen recording. The page shows its resolution, frame rate, length and size."
-      },
-      {
-        "name": "Pick the size",
-        "text": "Choose 10 MB, 25 MB or 50 MB, or choose Another size and type a number from 1 to 2000."
-      },
-      {
-        "name": "Compress and download",
-        "text": "Press Compress and keep the tab open. When it’s done, the page shows the new size next to the limit you chose, a player to check the result, and a download link."
-      }
-    ]
-  },
   "crop-image": {
     "name": "Crop image",
     "benefit": "Crop, rotate or flip a photo.",
@@ -122,24 +86,6 @@
       {
         "name": "Save the new photo",
         "text": "Save the edited photo. The page reads the new file back and shows the location and date it now holds."
-      }
-    ]
-  },
-  "extract-frames-from-video": {
-    "name": "Extract frames",
-    "benefit": "Save frames from a video as JPG pictures.",
-    "steps": [
-      {
-        "name": "Choose the video",
-        "text": "Tap the box above and pick an MP4 or MOV from your iPhone, camera or a screen recording. The page shows its size, resolution, frame rate, length and video format, and opens it in a player."
-      },
-      {
-        "name": "Choose which frames",
-        "text": "Take one frame every few seconds over a stretch you set, or choose Moments I pick: pause the player where you want a picture and add that moment, or type a time. Then pick a size."
-      },
-      {
-        "name": "Extract and download",
-        "text": "Press Extract frames and keep the tab open. Each picture appears with its time and a download link. With more than one, Download all saves them in one ZIP."
       }
     ]
   },
@@ -266,24 +212,6 @@
       {
         "name": "Check and download",
         "text": "Each new file is read again to confirm the location is gone. Then download it, or take everything in one ZIP."
-      }
-    ]
-  },
-  "remove-video-metadata": {
-    "name": "Remove video metadata",
-    "benefit": "Take the location, device and date out of a video.",
-    "steps": [
-      {
-        "name": "Choose the video",
-        "text": "Tap the box above and pick an MP4, MOV or M4V from your iPhone, Android phone, camera or a screen recording. The page lists what it found in the video."
-      },
-      {
-        "name": "Remove the metadata",
-        "text": "Press Remove metadata. The page makes a new file and reads it again to check it. If part of the file can’t be checked, it says so."
-      },
-      {
-        "name": "Download",
-        "text": "Download the new file. Its name ends in -no-metadata, and your original file stays as it was."
       }
     ]
   },

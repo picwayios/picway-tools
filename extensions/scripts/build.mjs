@@ -1,7 +1,6 @@
 // Builds every extension into dist/<id>/ and a store upload zip into dist/<id>.zip.
 //   npm run build                  all extensions
 //   npm run build -- compress      one extension
-//   INCLUDE_LATER=1 npm run build  also include tools listed under `later` (local tries only)
 import { build } from 'vite';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -10,20 +9,21 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ICON, LAYOUT, SOURCE, TOOL_DATA, TOOLS_SRC } from '../build.config.mjs';
 import { GROUPS, SITE } from '../src/groups.mjs';
-import { toolsPlugin } from './vite-plugin-tools.mjs';
+import { LIBHEIF_OUT, toolsPlugin } from './vite-plugin-tools.mjs';
 import { LISTINGS } from '../store/listings.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const GEN = join(ROOT, '.gen');
-const DIST = resolve(ROOT, process.env.OUT_DIR ?? 'dist'); // OUT_DIR: build somewhere else, e.g. for INCLUDE_LATER tries
+const DIST = resolve(ROOT, process.env.OUT_DIR ?? 'dist'); // OUT_DIR: build somewhere else
 const VERSION = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).version;
-const LATER = process.env.INCLUDE_LATER === '1';
 const FIXED_TIME = new Date('2026-01-01T00:00:00Z');
 const only = process.argv.slice(2);
 
 const CSP = [
+  "default-src 'self'",
   "script-src 'self' 'wasm-unsafe-eval'",
   "object-src 'none'",
+  "style-src 'self' 'unsafe-inline'", // the tools set style attributes on their elements
   "connect-src 'self' blob: data:",
   "img-src 'self' blob: data:",
   "media-src 'self' blob: data:",
@@ -145,7 +145,10 @@ function noticesFromRepo(pkgs) {
     for (const x of e.sub) out.push(`  - ${x.text}: ${x.license}`);
   }
   if (used.some((e) => e.names.includes('libheif-js')) && lgpl) out.push('', 'About the LGPL-3.0 part', '-----------------------', plain(lgpl));
-  for (const f of [...new Set([...new Set(used)].flatMap((e) => [...e.files, ...e.sub.flatMap((x) => x.files)]))]) {
+  const files = [...new Set([...new Set(used)].flatMap((e) => [...e.files, ...e.sub.flatMap((x) => x.files)]))];
+  // LGPL-3.0 refers to the GPL-3.0 text; ship it with libheif-js when the repo has it as its own file
+  if (used.some((e) => e.names.includes('libheif-js')) && existsSync(join(TOOLS_SRC, 'licenses/GPL-3.0.txt')) && !files.includes('licenses/GPL-3.0.txt')) files.push('licenses/GPL-3.0.txt');
+  for (const f of files) {
     out.push('', '', `==== ${f} ====`, '', readFileSync(join(TOOLS_SRC, f), 'utf8').trim());
   }
   return out.join('\n') + '\n';
@@ -160,7 +163,7 @@ console.log(`tool sources: ${LAYOUT} layout`);
 const results = [];
 for (const g of GROUPS) {
   if (only.length && !only.includes(g.id)) continue;
-  const ids = [...g.tools, ...(LATER ? g.later : [])];
+  const ids = g.tools;
   const data = { id: g.id, name: g.name, purpose: g.purpose, tools: ids.map(toolData) };
   const gen = join(GEN, g.id);
   rmSync(gen, { recursive: true, force: true });
@@ -238,6 +241,11 @@ for (const g of GROUPS) {
       if (/^avif_enc/.test(f) || /^avif_dec/.test(f)) pkgs.add('@jsquash/avif');
       if (/^webp_enc/.test(f) || /^webp_dec/.test(f)) pkgs.add('@jsquash/webp');
     }
+  }
+  if (plugin.api.libheif.file) {
+    mkdirSync(dirname(join(out, LIBHEIF_OUT)), { recursive: true });
+    copyFileSync(plugin.api.libheif.file, join(out, LIBHEIF_OUT));
+    pkgs.add('libheif-js');
   }
   icons(out);
   writeFileSync(join(out, 'background.js'), BACKGROUND);

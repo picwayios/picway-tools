@@ -9,7 +9,7 @@ let parseYaml;
 try { ({ parse: parseYaml } = await import('yaml')); } catch { throw new Error('This script needs the yaml package: npm install --no-save yaml'); }
 const src = resolve(process.env.TOOLS_SRC ?? readFileSync('tools-src.local', 'utf8').split('\n')[0].trim());
 const out = {};
-for (const id of GROUPS.flatMap((g) => [...g.tools, ...g.later]).sort()) {
+for (const id of GROUPS.flatMap((g) => g.tools).sort()) {
   const fm = readFileSync(`${src}/src/collections/tools/en/${id}.md`, 'utf8').match(/^---\n([\s\S]*?)\n---/);
   const d = parseYaml(fm[1]);
   if (d.toolId !== id) throw new Error(`${id}: toolId is ${d.toolId}`);
