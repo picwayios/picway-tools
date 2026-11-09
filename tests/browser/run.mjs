@@ -4,6 +4,7 @@
 //   npm run build && npm run test:browser
 //   node tests/browser/run.mjs --compare <other-build-dir>   # same flow on a second build, compare bytes
 //   node tests/browser/run.mjs --screenshots docs/screenshots  # also save a screenshot per tool
+//   node tests/browser/run.mjs --url http://localhost:5173   # test the dev server
 //   node tests/browser/run.mjs --browser webkit --only compress-video  # WebKit has H.264; Playwright’s Chromium does not
 //
 // Needs a browser that playwright-core can launch (npx playwright-core install chromium webkit).
@@ -108,9 +109,10 @@ async function runOne(browser, base, c, label, shotDir) {
   return { label, errors, files: files.map((f) => ({ name: f.name, size: f.bytes.length, format: magic(f.bytes), sha256: sha(f.bytes), sha256Cmp: shaCmp(f.bytes, magic(f.bytes)) })), raw: files };
 }
 
+// --url tests a server that is already running (for example npm run dev) instead of dist/.
 const dist = join(ROOT, 'dist');
-if (!existsSync(join(dist, 'index.html'))) throw new Error('Run npm run build first.');
-const a = await serve(dist);
+if (!opt('--url') && !existsSync(join(dist, 'index.html'))) throw new Error('Run npm run build first.');
+const a = opt('--url') ? { url: opt('--url').replace(/\/$/, ''), server: { close() {} } } : await serve(dist);
 const cmpDir = opt('--compare') && resolve(opt('--compare'));
 const b = cmpDir ? await serve(cmpDir) : null;
 const engine = opt('--browser') === 'webkit' ? webkit : chromium;
