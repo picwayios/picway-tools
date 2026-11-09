@@ -31,4 +31,5 @@ export const CASES = [
   { slug: 'compress-video', files: ['video/h264-aac.mov'], start: 'Compress', download: 'link', expect: 'mp4', timeout: 180000 },
   { slug: 'video-to-gif', files: ['video/h264.mp4'], start: 'Make GIF', download: 'link', expect: 'gif', timeout: 180000 },
   { slug: 'gif-to-mp4', files: ['video/anim.gif'], start: 'Convert to MP4', download: 'link', expect: 'mp4', timeout: 180000 },
+  { slug: 'compress-gif', files: ['video/anim.gif'], start: 'Compress GIF', download: 'link', expect: 'gif', timeout: 180000 },
 ];

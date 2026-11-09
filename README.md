@@ -22,6 +22,7 @@ Browser tools for photos and videos: compress, convert, resize, crop, blur, add 
 | [MOV to MP4](tools/mov-to-mp4/) | Turn a MOV video into an MP4. | `tools/mov-to-mp4/` | [picway.app/tools/mov-to-mp4](https://picway.app/tools/mov-to-mp4/) |
 | [Video to GIF](tools/video-to-gif/) | Turn part of a video into an animated GIF. | `tools/video-to-gif/` | [picway.app/tools/video-to-gif](https://picway.app/tools/video-to-gif/) |
 | [GIF to MP4](tools/gif-to-mp4/) | Turn an animated GIF into an MP4 video. | `tools/gif-to-mp4/` | [picway.app/tools/gif-to-mp4](https://picway.app/tools/gif-to-mp4/) |
+| [Compress GIF](tools/compress-gif/) | Make an animated GIF smaller. | `tools/compress-gif/` | [picway.app/tools/compress-gif](https://picway.app/tools/compress-gif/) |
 
 Each folder has its own README with steps, formats and limits.
 
