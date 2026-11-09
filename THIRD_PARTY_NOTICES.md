@@ -36,6 +36,10 @@ PicWay Tools is MIT-licensed (see [LICENSE](LICENSE)). The tools use the open-so
 
 **License texts.** [licenses/libheif-js-LGPL-3.0.txt](licenses/libheif-js-LGPL-3.0.txt) is the LGPL-3.0 text from the libheif-js package. [licenses/libheif.txt](licenses/libheif.txt) is the license file shipped with its WebAssembly build (LGPL-3.0 followed by GPL-3.0). [licenses/GPL-3.0.txt](licenses/GPL-3.0.txt) is the GPL-3.0 text on its own, because LGPL-3.0 refers to it.
 
+### In the browser extensions
+
+Each browser extension package in [`extensions/`](extensions/) ships the same file unmodified, at `libheif/libheif-bundle.mjs` inside the package. To use a different build, unzip the package, replace that file with an interface-compatible libheif-js ES module, and load the folder as an unpacked extension (in Chrome or Edge, turn on Developer mode on the Extensions page and choose Load unpacked). Nothing else needs to change.
+
 ## Development tools
 
 [Vite](https://github.com/vitejs/vite) (MIT) builds the tools; the only Vite code in a build is its small module-preload helper. [playwright-core](https://github.com/microsoft/playwright) (Apache-2.0) is used only for the browser tests and is not part of a build.
