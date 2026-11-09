@@ -15,7 +15,7 @@ Click an extension's toolbar button to open its tools page in a new tab, or to s
 
 - Manifest V3. No `permissions`, `host_permissions` or content scripts. The extension page policy allows `'wasm-unsafe-eval'`, which the image codecs (WebAssembly) need, and limits network access from the page to the extension itself.
 - All code and WebAssembly files are in the package. Nothing is loaded from the network.
-- Video tools use the browser's WebCodecs.
+- When a video tool decodes or re-encodes video, it uses the browser's WebCodecs.
 
 ## Build
 
