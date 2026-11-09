@@ -3,6 +3,7 @@ import { createFile, DataStream, Endianness, MP4BoxBuffer } from 'mp4box';
 import { ArrayBufferTarget, Muxer, StreamTarget } from 'mp4-muxer';
 import { patchEdits, type EditEntry } from './editlist.ts';
 import { frameEditsOk, keptAudioBytes, planAudio, planVideo, toUs, visibleWindows } from './editwindow.ts';
+import { makeReorder, reorderDepth } from './reorder.ts';
 import { hasHiddenAudio, planEncode, type Plan, type Preset } from './videoplan.ts';
 
 export interface VideoMeta {
@@ -188,15 +189,16 @@ export async function transcode(file: File, o: Options): Promise<Result> {
   let audioFirst = true;
 
   let failure: unknown = null;
-  const encoder = new VideoEncoder({ output: (chunk, m) => muxer.addVideoChunk(chunk, m), error: (e) => (failure = e) });
+  const encoder = new VideoEncoder({ output: (chunk, m) => { try { muxer.addVideoChunk(chunk, m); } catch (e) { failure = e; } }, error: (e) => (failure = e) });
   encoder.configure(encCfg);
   const scale = plan.w !== meta.w || plan.h !== meta.h;
   const canvas = scale ? new OffscreenCanvas(plan.w, plan.h) : null;
   const ctx = canvas?.getContext('2d') ?? null;
   let framesOut = 0;
   const total = vPlan ? vPlan.out.size : (v.nb_samples as number);
-  const decoder = new VideoDecoder({
-    output: (frame) => {
+
+  const reorder = makeReorder<VideoFrame>((frame) => encodeOne(frame), info.isFragmented ? 4 : reorderDepth((mp4.getTrackById(v.id)?.samples ?? []).map((x: AnyBox) => x.cts)));
+  const encodeOne = (frame: VideoFrame) => {
 
       const outTs = vPlan ? vPlan.out.get(frame.timestamp) : frame.timestamp;
       if (outTs === undefined) return frame.close();
@@ -216,12 +218,12 @@ export async function transcode(file: File, o: Options): Promise<Result> {
         framesOut++;
         if (framesOut % 8 === 0) o.onProgress(Math.min(framesOut, total), total);
       }
-    },
-    error: (e) => (failure = e),
-  });
+  };
+  const decoder = new VideoDecoder({ output: (frame) => reorder.push(frame), error: (e) => (failure = e) });
   decoder.configure(decCfg);
 
   const vq: AnyBox[] = [];
+  const recent: number[] = [];
   const aq: AnyBox[] = [];
   mp4.onSamples = (id: number, _u: unknown, samples: AnyBox[]) => (id === v.id ? vq : aq).push(...samples);
   mp4.setExtractionOptions(v.id, null, { nbSamples: 100 });
@@ -252,6 +254,7 @@ export async function transcode(file: File, o: Options): Promise<Result> {
         abort();
       }
       const s = vq.shift();
+      if (info.isFragmented) { recent.push(s.cts); if (recent.length > 33) recent.shift(); reorder.depth = reorderDepth(recent); }
       if (!vPlan || vPlan.feed[s.number]) decoder.decode(new EncodedVideoChunk({ type: s.is_sync ? 'key' : 'delta', timestamp: toUs(s.cts, s.timescale), duration: toUs(s.duration, s.timescale), data: s.data }));
       mp4.releaseUsedSamples(v.id, s.number + 1);
     }
@@ -269,10 +272,12 @@ export async function transcode(file: File, o: Options): Promise<Result> {
     mp4.flush();
     await drain();
     await decoder.flush();
+    reorder.flush();
     await encoder.flush();
     abort();
     muxer.finalize();
   } finally {
+    for (const fr of reorder.drop()) fr.close();
     try { if (decoder.state !== 'closed') decoder.close(); } catch {  }
     try { if (encoder.state !== 'closed') encoder.close(); } catch {  }
   }

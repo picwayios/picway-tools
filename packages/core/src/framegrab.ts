@@ -2,6 +2,7 @@ import { MP4BoxBuffer } from 'mp4box';
 import { descriptionOf, open } from './transcode.ts';
 import { framesBefore, type GifPlan } from './gifplan.ts';
 import { frameWindows, grabFeed } from './editwindow.ts';
+import { makeReorder, reorderDepth } from './reorder.ts';
 type AnyBox = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 const CHUNK = 8 * 1024 * 1024;
 
@@ -59,8 +60,8 @@ export async function grabFrames(
     }
     o.onProgress(next, total);
   };
-  const decoder = new VideoDecoder({
-    output: (frame) => {
+
+  const reorder = makeReorder<VideoFrame>((frame) => {
       try {
         const ts = g.show.get(frame.timestamp);
         if (ts === undefined || next >= total || failure || o.signal.aborted) return void frame.close();
@@ -72,9 +73,8 @@ export async function grabFrames(
         failure = e;
         frame.close();
       }
-    },
-    error: (e) => (failure = e),
-  });
+  }, reorderDepth(samples.map((x: AnyBox) => x.cts)));
+  const decoder = new VideoDecoder({ output: (frame) => reorder.push(frame), error: (e) => (failure = e) });
   try {
     decoder.configure(cfg);
   } catch (e) {
@@ -127,9 +127,11 @@ export async function grabFrames(
     await drain();
     abort();
     await decoder.flush();
+    reorder.flush();
     abort();
     if (prev && next < total) emit(prev, total - next);
   } finally {
+    for (const fr of reorder.drop()) fr.close();
     (prev as VideoFrame | null)?.close();
     try { if (decoder.state !== 'closed') decoder.close(); } catch {  }
   }
