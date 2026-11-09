@@ -28,7 +28,7 @@ In browsers that can decode HEIC themselves, the browser does the decoding. In o
 
 Photos carry hidden info called EXIF: the capture date, camera, lens, and sometimes the GPS position. The first checkbox, **Remove location**, is on by default. It removes the GPS block and the embedded preview image, and keeps the rest. The second, **Remove all camera and date info**, strips all EXIF. The color profile is kept, because removing it changes how the photo looks.
 
-Each converted photo shows what was found and what was removed, so you can check before you share it.
+After each photo, the page tells you whether a location was found and removed.
 
 ### Limits
 

@@ -76,7 +76,7 @@ The browser test uses `playwright-core`; install its browsers with `npx playwrig
 These tools are made by [PicWay](https://picway.app/), an iPhone app for sorting your photo library. PicWay isn’t on the App Store yet.
 
 - **Swipe to sort.** Swipe left or right on each photo to decide what stays.
-- **Just your life photos.** The Life view sets screenshots, screen recordings and animated images aside, so you see the photos you took.
+- **Just your life photos.** The Life view sets screenshots, screen recordings and animated images aside. Anything it isn’t sure about stays in the view.
 - **And more.** Cut a section out of a video or change its speed part by part, make your own filters, convert formats, sort similar and duplicate photos, and search your library.
 
 ## License
