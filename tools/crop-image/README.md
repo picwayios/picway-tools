@@ -42,7 +42,7 @@ npm ci
 npm run dev
 ```
 
-Then open http://localhost:5173/tools/crop-image/. To build static files instead, run `npm run build` and serve the `dist/` folder.
+Then open `http://localhost:5173/tools/crop-image/`. To build static files instead, run `npm run build` and serve the `dist/` folder.
 
 The page script is [`main.ts`](main.ts); the processing code it uses lives in [`packages/core`](../../packages/core).
 

@@ -36,7 +36,7 @@ npm ci
 npm run dev
 ```
 
-Open the address it prints (usually http://localhost:5173/) and pick a tool. To build static files instead, run `npm run build`; the pages are written to `dist/`, and any static file server can host them.
+Open the address it prints (usually `http://localhost:5173/`) and pick a tool. To build static files instead, run `npm run build`; the pages are written to `dist/`, and any static file server can host them.
 
 ## Where your files go
 
