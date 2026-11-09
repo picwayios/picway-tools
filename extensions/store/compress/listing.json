@@ -1,0 +1,47 @@
+{
+  "name": "PicWay Image & Video Compressor",
+  "shortDescription": "Compress images and videos in your browser. JPG, PNG, WebP, HEIC and more, plus MOV and MP4 videos from your iPhone or camera.",
+  "description": "PicWay Image & Video Compressor puts two PicWay tools in one tab. Your files are processed inside your browser, and this extension has no server that receives them. The extension asks for no browser permissions.\n\nWhat's inside\n\nCompress images\nMake images smaller, by quality or a target size. Works with JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF, up to 50 files in the list. Set a quality, or type a target file size such as 500 KB. You can also cap the longest side, save as JPG or WebP, and remove the location (GPS) or all camera and date info. Each row shows the old and new size, and you can download each file or all of them in one ZIP.\n\nCompress video\nMake a video smaller to send or share. Choose a MOV or MP4 from your iPhone or camera, pick Balanced (smaller, still sharp) or Smallest (for sending over chat or email), and keep the original size or limit it to 1080p or 720p. The page shows the size before and after.\n\nHow to use\n1. Click the extension's button in the toolbar. A tab opens with the tools.\n2. Pick Compress images or Compress video, choose your files, and change the settings if you like.\n3. Download the result.\n\nThe same tools are also on the web:\nCompress images: https://picway.app/tools/compress-image/\nCompress video: https://picway.app/tools/compress-video/\n\nAbout PicWay\nPicWay is an iPhone app for sorting your photos. Swipe left or right to decide which photos to keep. Private Vault is a separate place for the photos, videos and files you want to keep apart: you open it by drawing a pattern, and you reach it by long-pressing the search button in the tab bar. PicWay also edits videos (cut out a section in the middle, or change the speed of parts of a clip), adds custom filters, converts formats, cleans up similar and duplicate photos, and searches your library. You'll also find memories from this day in past years, collages, compression, and Life Photos Only, which puts screenshots, screen recordings and animated images aside. PicWay browses, analyzes, compresses, organizes, and deletes your photos and videos on your iPhone. PicWay has no server that receives your photos. Your photos and videos leave this phone in only one case: the Private Vault’s iCloud sync (on by default). Items are encrypted and stored in your own iCloud, and only you can open them. PicWay isn't on the App Store yet. Learn more at https://picway.app/",
+  "singlePurpose": "Make image and video files smaller. The extension opens a page with two tools: compress images and compress a video. Your files are processed inside your browser, and this extension has no server that receives them.",
+  "permissions": "None requested (no \"permissions\", \"host_permissions\" or \"optional_permissions\" in the manifest).",
+  "remoteCode": "No, I am not using remote code. All code and WebAssembly files are inside the package.",
+  "dataUsage": {
+    "collected": "None. Your files are processed inside your browser, and this extension has no server that receives them.",
+    "certify": [
+      "I do not sell or transfer user data to third parties, outside of the approved use cases",
+      "I do not use or transfer user data for purposes that are unrelated to my item's single purpose",
+      "I do not use or transfer user data to determine creditworthiness or for lending purposes"
+    ]
+  },
+  "privacyPolicy": "https://picway.app/privacy/",
+  "website": "https://picway.app/tools/",
+  "support": "https://picway.app/support/",
+  "publisher": "PicWay",
+  "language": "English",
+  "chrome": {
+    "category": "Tools",
+    "storeIcon": "icon-128.png",
+    "screenshots": "1280x800, screenshot-*.png",
+    "smallPromoTile": "promo-440x280.png"
+  },
+  "edge": {
+    "category": "Photos",
+    "logo": "logo-300.png",
+    "screenshots": "1280x800, screenshot-*.png",
+    "smallPromoTile": "promo-440x280.png",
+    "searchTerms": [
+      "compress image",
+      "compress video",
+      "image compressor",
+      "reduce photo size",
+      "heic",
+      "jpg",
+      "mp4"
+    ]
+  },
+  "manifest": {
+    "version": "1.0.0",
+    "permissions": [],
+    "content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'none'; connect-src 'self' blob: data:; img-src 'self' blob: data:; media-src 'self' blob: data:; font-src 'self'; worker-src 'self'; frame-src 'none'; form-action 'none'; base-uri 'none'"
+  }
+}

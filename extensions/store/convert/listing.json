@@ -1,0 +1,47 @@
+{
+  "name": "PicWay Image & Video Converter",
+  "shortDescription": "Convert images and videos in your browser: HEIC to JPG, PNG to JPG, WebP and more, MOV to MP4, video to GIF and GIF to MP4.",
+  "description": "PicWay Image & Video Converter puts five PicWay tools in one tab. Your files are processed inside your browser, and this extension has no server that receives them. The extension asks for no browser permissions.\n\nWhat's inside\n\nHEIC to JPG\nTurn iPhone HEIC photos into JPG or PNG, up to 50 files in the list. Display P3 color is kept when your photo has it, and the location is removed unless you untick it.\n\nImage converter\nChange an image to JPG, PNG, WebP, AVIF, GIF, BMP or TIFF. It reads HEIC, JPG, PNG, WebP, AVIF, GIF, BMP and TIFF, up to 50 files in the list.\n\nMOV to MP4\nTurn a MOV video into an MP4. An H.264 video is copied as it is (fast, no re-encoding). An HEVC video, the format iPhones record by default, is re-encoded to H.264 so it plays almost anywhere, or you can choose to copy it as it is.\n\nVideo to GIF\nTurn part of a video into an animated GIF. Choose where it starts, how long it is, the frame rate, the width and whether it loops.\n\nGIF to MP4\nTurn an animated GIF into an MP4 video. Choose the size, how many times the animation plays, and the color for transparent areas.\n\nHow to use\n1. Click the extension's button in the toolbar. A tab opens with the tools.\n2. Pick a converter, choose your files, and change the settings if you like.\n3. Download the result.\n\nThe same tools are also on the web:\nHEIC to JPG: https://picway.app/tools/heic-to-jpg/\nImage converter: https://picway.app/tools/image-converter/\nMOV to MP4: https://picway.app/tools/mov-to-mp4/\nVideo to GIF: https://picway.app/tools/video-to-gif/\nGIF to MP4: https://picway.app/tools/gif-to-mp4/\n\nAbout PicWay\nPicWay is an iPhone app for sorting your photos. Swipe left or right to decide which photos to keep. Private Vault is a separate place for the photos, videos and files you want to keep apart: you open it by drawing a pattern, and you reach it by long-pressing the search button in the tab bar. PicWay also edits videos (cut out a section in the middle, or change the speed of parts of a clip), adds custom filters, converts formats, cleans up similar and duplicate photos, and searches your library. You'll also find memories from this day in past years, collages, compression, and Life Photos Only, which puts screenshots, screen recordings and animated images aside. PicWay browses, analyzes, compresses, organizes, and deletes your photos and videos on your iPhone. PicWay has no server that receives your photos. Your photos and videos leave this phone in only one case: the Private Vault’s iCloud sync (on by default). Items are encrypted and stored in your own iCloud, and only you can open them. PicWay isn't on the App Store yet. Learn more at https://picway.app/",
+  "singlePurpose": "Change image and video files from one format to another. The extension opens a page with five converters (HEIC to JPG, image formats, MOV to MP4, video to GIF, GIF to MP4). Your files are processed inside your browser, and this extension has no server that receives them.",
+  "permissions": "None requested (no \"permissions\", \"host_permissions\" or \"optional_permissions\" in the manifest).",
+  "remoteCode": "No, I am not using remote code. All code and WebAssembly files are inside the package.",
+  "dataUsage": {
+    "collected": "None. Your files are processed inside your browser, and this extension has no server that receives them.",
+    "certify": [
+      "I do not sell or transfer user data to third parties, outside of the approved use cases",
+      "I do not use or transfer user data for purposes that are unrelated to my item's single purpose",
+      "I do not use or transfer user data to determine creditworthiness or for lending purposes"
+    ]
+  },
+  "privacyPolicy": "https://picway.app/privacy/",
+  "website": "https://picway.app/tools/",
+  "support": "https://picway.app/support/",
+  "publisher": "PicWay",
+  "language": "English",
+  "chrome": {
+    "category": "Tools",
+    "storeIcon": "icon-128.png",
+    "screenshots": "1280x800, screenshot-*.png",
+    "smallPromoTile": "promo-440x280.png"
+  },
+  "edge": {
+    "category": "Photos",
+    "logo": "logo-300.png",
+    "screenshots": "1280x800, screenshot-*.png",
+    "smallPromoTile": "promo-440x280.png",
+    "searchTerms": [
+      "heic to jpg",
+      "mov to mp4",
+      "video to gif",
+      "gif to mp4",
+      "image converter",
+      "webp to jpg",
+      "png to jpg"
+    ]
+  },
+  "manifest": {
+    "version": "1.0.0",
+    "permissions": [],
+    "content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'none'; connect-src 'self' blob: data:; img-src 'self' blob: data:; media-src 'self' blob: data:; font-src 'self'; worker-src 'self'; frame-src 'none'; form-action 'none'; base-uri 'none'"
+  }
+}

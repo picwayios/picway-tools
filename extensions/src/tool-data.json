@@ -1,0 +1,326 @@
+{
+  "blur-image": {
+    "name": "Blur image",
+    "benefit": "Pixelate, blur or black out part of a photo.",
+    "steps": [
+      {
+        "name": "Choose an image",
+        "text": "Choose one image with the box above, or drop it on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
+      },
+      {
+        "name": "Mark what to hide",
+        "text": "Drag across each part you want to hide. You can mark several areas, or tap Whole image. Pick Pixelate, Blur or Black box; for Pixelate and Blur, also pick a strength."
+      },
+      {
+        "name": "Create and download",
+        "text": "Check the preview: it shows what will be saved. Tap Create image, then tap Download."
+      }
+    ]
+  },
+  "compress-gif": {
+    "name": "Compress GIF",
+    "benefit": "Make an animated GIF smaller.",
+    "steps": [
+      {
+        "name": "Choose the GIF",
+        "text": "Tap the box above and pick a GIF. The page shows its size in pixels, how many frames it has, how long it runs and how big the file is."
+      },
+      {
+        "name": "Pick the settings",
+        "text": "Choose Light, Medium or Heavy compression, a size, and whether to keep every frame or only 1 frame in 2 or 3."
+      },
+      {
+        "name": "Compress and download",
+        "text": "Press Compress GIF and keep the tab open. The page shows the new GIF and its file size next to the original’s, then offers it to download."
+      }
+    ]
+  },
+  "compress-image": {
+    "name": "Compress images",
+    "benefit": "Make images smaller, by quality or a target size.",
+    "steps": [
+      {
+        "name": "Choose your images",
+        "text": "Choose up to 50 images with the box above, or drop them on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
+      },
+      {
+        "name": "Pick how much to compress",
+        "text": "Under “Compress by”, choose Quality and move the slider, or choose Target file size and type a size such as 500 KB. To make the pixel size smaller too, pick a value under “Longest side”."
+      },
+      {
+        "name": "Download",
+        "text": "Each row shows the old and new size. Download each file, or take them all in one ZIP."
+      }
+    ]
+  },
+  "compress-video": {
+    "name": "Compress video",
+    "benefit": "Make a video smaller to send or share.",
+    "steps": [
+      {
+        "name": "Choose the video",
+        "text": "Tap the box above and pick a MOV or MP4 from your iPhone or camera. Once it reads the file, the page shows its size, resolution, frame rate and format."
+      },
+      {
+        "name": "Pick the settings",
+        "text": "Balanced keeps the picture sharp. Smallest suits chat and email. Choose the 1080p option (long side up to 1920 pixels) or the 720p option (up to 1280 pixels) to shrink it further."
+      },
+      {
+        "name": "Compress and download",
+        "text": "Press Compress and keep the tab open until it finishes. Then download the MP4."
+      }
+    ]
+  },
+  "compress-video-to-size": {
+    "name": "Compress video to a size",
+    "benefit": "Compress a video to a size you choose, such as 10 MB.",
+    "steps": [
+      {
+        "name": "Choose the video",
+        "text": "Tap the box above and pick an MP4 or MOV from your iPhone, camera or a screen recording. The page shows its resolution, frame rate, length and size."
+      },
+      {
+        "name": "Pick the size",
+        "text": "Choose 10 MB, 25 MB or 50 MB, or choose Another size and type a number from 1 to 2000."
+      },
+      {
+        "name": "Compress and download",
+        "text": "Press Compress and keep the tab open. When it’s done, the page shows the new size next to the limit you chose, a player to check the result, and a download link."
+      }
+    ]
+  },
+  "crop-image": {
+    "name": "Crop image",
+    "benefit": "Crop, rotate or flip a photo.",
+    "steps": [
+      {
+        "name": "Choose an image",
+        "text": "Choose one image with the box above, or drop it on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
+      },
+      {
+        "name": "Crop, rotate or flip",
+        "text": "Drag the crop box, or drag a corner to resize it. Pick a ratio such as 1:1 or 16:9, or type the width and height in pixels. Use Rotate left, Rotate right, Flip horizontal and Flip vertical to turn the picture."
+      },
+      {
+        "name": "Create and download",
+        "text": "Tap Create image. A Download button appears, with the old and new size in pixels and in bytes."
+      }
+    ]
+  },
+  "edit-photo-metadata": {
+    "name": "Edit photo metadata",
+    "benefit": "Change a photo’s date, time or location.",
+    "steps": [
+      {
+        "name": "Choose the photo",
+        "text": "Pick a JPG or HEIC photo. The page reads its location, date, time zone and camera fields and shows them as the original values."
+      },
+      {
+        "name": "Change what you need",
+        "text": "Click the map, search for a place or type coordinates. Set a new date and time. The time zone is optional. Edit the camera, author or description if you want."
+      },
+      {
+        "name": "Save the new photo",
+        "text": "Save the edited photo. The page reads the new file back and shows the location and date it now holds."
+      }
+    ]
+  },
+  "extract-frames-from-video": {
+    "name": "Extract frames",
+    "benefit": "Save frames from a video as JPG pictures.",
+    "steps": [
+      {
+        "name": "Choose the video",
+        "text": "Tap the box above and pick an MP4 or MOV from your iPhone, camera or a screen recording. The page shows its size, resolution, frame rate, length and video format, and opens it in a player."
+      },
+      {
+        "name": "Choose which frames",
+        "text": "Take one frame every few seconds over a stretch you set, or choose Moments I pick: pause the player where you want a picture and add that moment, or type a time. Then pick a size."
+      },
+      {
+        "name": "Extract and download",
+        "text": "Press Extract frames and keep the tab open. Each picture appears with its time and a download link. With more than one, Download all saves them in one ZIP."
+      }
+    ]
+  },
+  "gif-to-mp4": {
+    "name": "GIF to MP4",
+    "benefit": "Turn an animated GIF into an MP4 video.",
+    "steps": [
+      {
+        "name": "Choose the GIF",
+        "text": "Tap the box above and pick an animated GIF. The page shows its size in pixels, how many frames it has, how long it runs and how big the file is."
+      },
+      {
+        "name": "Pick the settings",
+        "text": "Choose a size, how many times in a row the animation plays (once, or 2, 3, 5 or 10 times) and whether transparent areas are filled with white or black."
+      },
+      {
+        "name": "Convert and download",
+        "text": "Press Convert to MP4 and keep the tab open. The page shows the video, then offers it to download."
+      }
+    ]
+  },
+  "heic-to-jpg": {
+    "name": "HEIC to JPG",
+    "benefit": "Turn iPhone HEIC photos into JPG or PNG.",
+    "steps": [
+      {
+        "name": "Choose your HEIC photos",
+        "text": "Choose up to 50 HEIC photos with the box above, or drop them on it."
+      },
+      {
+        "name": "Pick the settings",
+        "text": "Choose JPG or PNG. Leave “Remove location” on if you plan to share the photos. Turn on “Remove all camera and date info” to remove the camera and date info (EXIF). The color profile stays."
+      },
+      {
+        "name": "Download",
+        "text": "Download each photo, or take them all in one ZIP."
+      }
+    ]
+  },
+  "image-converter": {
+    "name": "Image converter",
+    "benefit": "Change an image to JPG, PNG, WebP or another format.",
+    "steps": [
+      {
+        "name": "Choose your images",
+        "text": "Choose up to 50 images with the box above, or drop them on it. HEIC, JPG, PNG, WebP, AVIF, GIF, BMP and TIFF files all work."
+      },
+      {
+        "name": "Pick the output format and settings",
+        "text": "Choose the format under “Convert to”. For JPG, WebP and AVIF, set the quality. For JPG and BMP, choose the background color for transparent areas. Leave “Remove location” on if you plan to share the images."
+      },
+      {
+        "name": "Download",
+        "text": "Download each converted image, or take them all in one ZIP."
+      }
+    ]
+  },
+  "mov-to-mp4": {
+    "name": "MOV to MP4",
+    "benefit": "Turn a MOV video into an MP4.",
+    "steps": [
+      {
+        "name": "Choose the MOV",
+        "text": "Tap the box above and pick a MOV from your iPhone, camera or a screen recording. The page shows its size, resolution, frame rate and video format."
+      },
+      {
+        "name": "Check the video setting",
+        "text": "An H.264 video is copied as it is. For an HEVC video, keep “Re-encode to H.264” to play it almost anywhere (on iPhone and iPad, the page won’t start it if the new file is estimated to be over 300 MB), or choose “Copy the video as it is” for a fast copy."
+      },
+      {
+        "name": "Convert and download",
+        "text": "Press Convert to MP4 and keep the tab open. The page checks the new file, then offers the MP4 to download."
+      }
+    ]
+  },
+  "photo-border": {
+    "name": "Photo border",
+    "benefit": "Add a border, or make a photo square without cropping.",
+    "steps": [
+      {
+        "name": "Choose a photo",
+        "text": "Tap the box above and pick a JPG, PNG, WebP or HEIC photo."
+      },
+      {
+        "name": "Pick a style",
+        "text": "Choose an even border, a Polaroid card with room for a caption, or padding that makes the photo 1:1 or 4:5 without cropping it."
+      },
+      {
+        "name": "Set the width and color, then download",
+        "text": "Slide the width, pick a color, and save the result as JPG or PNG."
+      }
+    ]
+  },
+  "photo-collage": {
+    "name": "Photo collage",
+    "benefit": "Put several photos into one image or one long strip.",
+    "steps": [
+      {
+        "name": "Add your photos",
+        "text": "Tap the box above and pick your photos or screenshots. HEIC photos work too."
+      },
+      {
+        "name": "Choose a layout",
+        "text": "Pick Collage for a grid in a 1:1, 4:5, 3:4 or 9:16 shape, or Long strip to stack photos from top to bottom. Use the arrows to change the order."
+      },
+      {
+        "name": "Download",
+        "text": "Check the preview, then download the result as JPG or PNG."
+      }
+    ]
+  },
+  "remove-photo-location": {
+    "name": "Remove photo location",
+    "benefit": "Take the GPS location out of a photo before you share it.",
+    "steps": [
+      {
+        "name": "Choose your photos",
+        "text": "Tap the box above and pick JPG or HEIC photos, or drop them on it. The page first lists what each photo contains."
+      },
+      {
+        "name": "Choose what to remove",
+        "text": "“Remove location” is on by default. Turn on “Remove everything” to also drop camera, lens and date info."
+      },
+      {
+        "name": "Check and download",
+        "text": "Each new file is read again to confirm the location is gone. Then download it, or take everything in one ZIP."
+      }
+    ]
+  },
+  "remove-video-metadata": {
+    "name": "Remove video metadata",
+    "benefit": "Take the location, device and date out of a video.",
+    "steps": [
+      {
+        "name": "Choose the video",
+        "text": "Tap the box above and pick an MP4, MOV or M4V from your iPhone, Android phone, camera or a screen recording. The page lists what it found in the video."
+      },
+      {
+        "name": "Remove the metadata",
+        "text": "Press Remove metadata. The page makes a new file and reads it again to check it. If part of the file can’t be checked, it says so."
+      },
+      {
+        "name": "Download",
+        "text": "Download the new file. Its name ends in -no-metadata, and your original file stays as it was."
+      }
+    ]
+  },
+  "resize-image": {
+    "name": "Resize images",
+    "benefit": "Change the width and height in pixels or percent.",
+    "steps": [
+      {
+        "name": "Choose your images",
+        "text": "Choose up to 50 images with the box above, or drop them on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
+      },
+      {
+        "name": "Set the new size",
+        "text": "Type a width, a height or both in pixels, or set “Resize by” to Percentage and type a number such as 50. Leave “Keep the aspect ratio” on so the image is not stretched."
+      },
+      {
+        "name": "Download",
+        "text": "Each row shows the old and new pixel size. Download each file, or take them all in one ZIP."
+      }
+    ]
+  },
+  "video-to-gif": {
+    "name": "Video to GIF",
+    "benefit": "Turn part of a video into an animated GIF.",
+    "steps": [
+      {
+        "name": "Choose the video",
+        "text": "Tap the box above and pick an MP4 or MOV from your iPhone, camera or a screen recording. The page shows its size, resolution, frame rate, length and video format."
+      },
+      {
+        "name": "Pick the clip and settings",
+        "text": "Type the second where the GIF should start and choose a length: 2, 3, 5, 8, 10, 15 or 20 seconds. Then pick a frame rate, a width and whether the GIF loops."
+      },
+      {
+        "name": "Make and download",
+        "text": "Press Make GIF and keep the tab open. The page shows a preview of the GIF, then offers it to download."
+      }
+    ]
+  }
+}

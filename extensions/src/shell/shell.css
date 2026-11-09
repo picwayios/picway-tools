@@ -1,0 +1,65 @@
+/* Page layout and color tokens for the extension page. The tool controls use the
+   shared .tl-* rules (tool.css, generated at build time from the tool source). */
+:root {
+  color-scheme: light dark;
+  --c-bg-light: #ffffff;
+  --c-bg-gray: #f5f5f7;
+  --c-text: #1d1d1f;
+  --c-text-2: #6e6e73;
+  --c-accent: #1a57e0;
+  --c-warm: #c24026;
+  --c-btn: #1a57e0;
+  --fs-small: 14px;
+  --fw-semibold: 600;
+  --gap-2: 16px;
+  --gap-3: 24px;
+  --gap-4: 40px;
+  --nav-h: 0px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg-light: #0f0f11;
+    --c-bg-gray: #17181b;
+    --c-text: #f5f5f7;
+    --c-text-2: #a1a1a6;
+    --c-accent: #6ba3ff;
+    --c-warm: #ff9e85;
+  }
+}
+* { box-sizing: border-box; }
+html { background: var(--c-bg-light); color: var(--c-text); }
+body {
+  margin: 0;
+  font: 17px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--c-bg-light);
+  color: var(--c-text);
+}
+a { color: var(--c-accent); }
+.x-wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+.x-head { display: flex; gap: 14px; align-items: center; margin-bottom: 18px; }
+.x-head img { width: 48px; height: 48px; border-radius: 11px; flex: none; }
+.x-head h1 { font-size: 1.5rem; margin: 0; line-height: 1.2; }
+.x-head p { margin: 2px 0 0; color: var(--c-text-2); font-size: var(--fs-small); }
+.x-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.x-tabs [role='tab'] {
+  font: inherit; font-size: 15px; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--c-text-2); background: transparent; color: var(--c-text);
+}
+.x-tabs [role='tab'][aria-selected='true'] { background: var(--c-btn); border-color: var(--c-btn); color: #fff; }
+.x-tabs [role='tab']:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+.x-panel h2 { font-size: 1.35rem; margin: 18px 0 2px; }
+.x-benefit { margin: 0; color: var(--c-text-2); }
+.tool { margin: var(--gap-3) 0 var(--gap-4); padding: var(--gap-3); border-radius: 18px; background: var(--c-bg-gray); }
+.steps h2 { font-size: 1.15rem; }
+.steps ol { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: var(--gap-2); }
+.step { counter-increment: step; position: relative; padding-left: 44px; }
+.step::before {
+  content: counter(step); position: absolute; left: 0; top: 2px; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--c-btn); color: #fff; font-weight: var(--fw-semibold); display: grid; place-items: center; font-size: 15px;
+}
+.step h3 { margin: 0 0 4px; font-size: 1rem; }
+.step p { margin: 0; }
+.x-web { margin: var(--gap-3) 0 0; font-size: var(--fs-small); color: var(--c-text-2); }
+.x-foot { margin-top: var(--gap-4); padding-top: var(--gap-2); border-top: 1px solid rgba(128, 128, 128, 0.25); font-size: var(--fs-small); color: var(--c-text-2); }
+.x-foot p { margin: 0 0 8px; }
+[hidden] { display: none !important; }

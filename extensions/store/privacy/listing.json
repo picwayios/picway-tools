@@ -1,0 +1,46 @@
+{
+  "name": "PicWay Photo Location & Metadata",
+  "shortDescription": "Remove the GPS location from photos before you share them, or change a photo's date, time and location. Runs in your browser.",
+  "description": "PicWay Photo Location & Metadata puts two PicWay tools in one tab. Your files are processed inside your browser, and this extension has no server that receives them. The extension asks for no browser permissions.\n\nWhat's inside\n\nRemove photo location\nTake the GPS location out of a photo before you share it. Add up to 50 JPG or HEIC photos to the list. The tool shows what it found in each photo, removes the location (GPS, preview image, XMP and IPTC), then checks the new file and tells you whether any location is left. You can also remove everything: camera, lens, dates and more.\n\nEdit photo metadata\nChange a photo's date, time or location. Choose one JPG or HEIC photo, then type or paste new coordinates, set the date, time and time zone, or edit the camera make and model, author, description and copyright fields. HEIC photos are converted to JPG first, keeping the Display P3 color profile; JPG photos are edited without re-encoding. In this extension you enter coordinates by typing or pasting them; the map and place search of the web version are not included.\n\nHow to use\n1. Click the extension's button in the toolbar. A tab opens with the tools.\n2. Pick a tool, choose your files, and change the settings if you like.\n3. Download the result.\n\nThe same tools are also on the web:\nRemove photo location: https://picway.app/tools/remove-photo-location/\nEdit photo metadata: https://picway.app/tools/edit-photo-metadata/\n\nAbout PicWay\nPicWay is an iPhone app for sorting your photos. Swipe left or right to decide which photos to keep. Private Vault is a separate place for the photos, videos and files you want to keep apart: you open it by drawing a pattern, and you reach it by long-pressing the search button in the tab bar. PicWay also edits videos (cut out a section in the middle, or change the speed of parts of a clip), adds custom filters, converts formats, cleans up similar and duplicate photos, and searches your library. You'll also find memories from this day in past years, collages, compression, and Life Photos Only, which puts screenshots, screen recordings and animated images aside. PicWay browses, analyzes, compresses, organizes, and deletes your photos and videos on your iPhone. PicWay has no server that receives your photos. Your photos and videos leave this phone in only one case: the Private Vault’s iCloud sync (on by default). Items are encrypted and stored in your own iCloud, and only you can open them. PicWay isn't on the App Store yet. Learn more at https://picway.app/",
+  "singlePurpose": "View, change or remove the location and other metadata stored in photos. The extension opens a page with two tools: remove photo location and edit photo metadata. Your files are processed inside your browser, and this extension has no server that receives them.",
+  "permissions": "None requested (no \"permissions\", \"host_permissions\" or \"optional_permissions\" in the manifest).",
+  "remoteCode": "No, I am not using remote code. All code and WebAssembly files are inside the package.",
+  "dataUsage": {
+    "collected": "None. Your files are processed inside your browser, and this extension has no server that receives them.",
+    "certify": [
+      "I do not sell or transfer user data to third parties, outside of the approved use cases",
+      "I do not use or transfer user data for purposes that are unrelated to my item's single purpose",
+      "I do not use or transfer user data to determine creditworthiness or for lending purposes"
+    ]
+  },
+  "privacyPolicy": "https://picway.app/privacy/",
+  "website": "https://picway.app/tools/",
+  "support": "https://picway.app/support/",
+  "publisher": "PicWay",
+  "language": "English",
+  "chrome": {
+    "category": "Privacy & Security",
+    "storeIcon": "icon-128.png",
+    "screenshots": "1280x800, screenshot-*.png",
+    "smallPromoTile": "promo-440x280.png"
+  },
+  "edge": {
+    "category": "Photos",
+    "logo": "logo-300.png",
+    "screenshots": "1280x800, screenshot-*.png",
+    "smallPromoTile": "promo-440x280.png",
+    "searchTerms": [
+      "remove gps from photo",
+      "exif remover",
+      "photo metadata",
+      "exif editor",
+      "remove location",
+      "change photo date"
+    ]
+  },
+  "manifest": {
+    "version": "1.0.0",
+    "permissions": [],
+    "content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'none'; connect-src 'self' blob: data:; img-src 'self' blob: data:; media-src 'self' blob: data:; font-src 'self'; worker-src 'self'; frame-src 'none'; form-action 'none'; base-uri 'none'"
+  }
+}
