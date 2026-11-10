@@ -8,7 +8,7 @@ A photo metadata remover in your browser: see what a photo reveals, then remove 
 
 ## How to use it
 
-1. **Choose your photos.** Tap the box at the top of the page and pick JPG or HEIC photos, or drop them on it. The page first lists what each photo contains.
+1. **Choose your photos.** Tap the box at the top of the page and pick JPG or HEIC photos, or drag and drop them into the box. The page first lists what each photo contains.
 2. **Choose what to remove.** “Remove location” is on by default. Turn on “Remove everything” to also drop camera, lens and date info.
 3. **Check and download.** Each new file is read again to confirm the location is gone. Then download it, or take everything in one ZIP.
 

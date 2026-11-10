@@ -9,7 +9,7 @@ A video compressor in your browser. Pick an iPhone video, Balanced or Smallest a
 ## How to use it
 
 1. **Choose the video.** Tap the box at the top of the page and pick a MOV or MP4 from your iPhone or camera. Once it reads the file, the page shows its size, resolution, frame rate and format.
-2. **Pick the settings.** Balanced keeps the picture sharp. Smallest suits chat and email. Choose the 1080p option (long side up to 1920 pixels) or the 720p option (up to 1280 pixels) to shrink it further.
+2. **Pick the settings.** Balanced aims to keep more picture detail. Smallest suits chat and email. Choose the 1080p option (long side up to 1920 pixels) or the 720p option (up to 1280 pixels) to shrink it further.
 3. **Compress and download.** Press Compress and keep the tab open until it finishes. Then download the MP4.
 
 ## Details

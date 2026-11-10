@@ -8,7 +8,7 @@ HEIC to JPG in your browser: convert iPhone HEIC photos to JPG or PNG. It keeps 
 
 ## How to use it
 
-1. **Choose your HEIC photos.** Choose up to 50 HEIC photos with the box at the top of the page, or drop them on it.
+1. **Choose your HEIC photos.** Choose up to 50 HEIC photos with the box at the top of the page, or drag and drop them into the box.
 2. **Pick the settings.** Choose JPG or PNG. Leave “Remove location” on if you plan to share the photos. Turn on “Remove all camera and date info” to remove the camera and date info (EXIF). The color profile stays.
 3. **Download.** Download each photo, or take them all in one ZIP.
 

@@ -1,6 +1,6 @@
 # Compress images
 
-Compress JPG, PNG, WebP and iPhone HEIC photos in your browser. Set a quality or a target size such as 500 KB, cap the longest side, and download the files.
+Compress JPG, PNG, WebP, AVIF, BMP, TIFF and HEIC photos in your browser. Set a quality or a target size such as 500 KB, cap the longest side, and download.
 
 **Use it online:** https://picway.app/tools/compress-image/
 
@@ -8,7 +8,7 @@ Compress JPG, PNG, WebP and iPhone HEIC photos in your browser. Set a quality or
 
 ## How to use it
 
-1. **Choose your images.** Choose up to 50 images with the box at the top of the page, or drop them on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work.
+1. **Choose your images.** Choose up to 50 images with the box at the top of the page, or drag and drop them into the box. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work.
 2. **Pick how much to compress.** Under “Compress by”, choose Quality and move the slider, or choose Target file size and type a size such as 500 KB. To make the pixel size smaller too, pick a value under “Longest side”.
 3. **Download.** Each row shows the old and new size. Download each file, or take them all in one ZIP.
 

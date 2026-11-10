@@ -1,6 +1,6 @@
 # MOV to MP4
 
-Convert a MOV from your iPhone or camera to MP4 in your browser. H.264 video is copied as it is, and HEVC can be re-encoded to H.264 to play almost anywhere.
+Convert a MOV from your iPhone or camera to MP4 in your browser. H.264 video is copied as it is, and HEVC can be re-encoded to H.264 for wider device support.
 
 **Use it online:** https://picway.app/tools/mov-to-mp4/
 
@@ -9,14 +9,14 @@ Convert a MOV from your iPhone or camera to MP4 in your browser. H.264 video is 
 ## How to use it
 
 1. **Choose the MOV.** Tap the box at the top of the page and pick a MOV from your iPhone, camera or a screen recording. The page shows its size, resolution, frame rate and video format.
-2. **Check the video setting.** An H.264 video is copied as it is. For an HEVC video, keep “Re-encode to H.264” to play it almost anywhere (on iPhone and iPad, the page won’t start it if the new file is estimated to be over 300 MB), or choose “Copy the video as it is” for a fast copy.
+2. **Check the video setting.** An H.264 video is copied as it is. For an HEVC video, keep “Re-encode to H.264” so more devices and apps can play it (on iPhone and iPad, the page won’t start it if the new file is estimated to be over 300 MB), or choose “Copy the video as it is” for a fast copy.
 3. **Convert and download.** Press Convert to MP4 and keep the tab open. The page checks the new file, then offers the MP4 to download.
 
 ## Details
 
 ### What the video setting does
 
-**Copy the video as it is** moves the H.264 or HEVC frames into the MP4 without decoding them, so it is fast and the picture isn’t re-encoded. **Re-encode to H.264** decodes each frame and encodes it again as H.264, which plays on almost any device. The page offers the choice only for HEVC videos, in a browser with WebCodecs. An H.264 video is always copied.
+**Copy the video as it is** moves the H.264 or HEVC frames into the MP4 without decoding them, so it is fast and the picture isn’t re-encoded. **Re-encode to H.264** decodes each frame and encodes it again as H.264, which more devices and apps can play, including those that support H.264. The page offers the choice only for HEVC videos, in a browser with WebCodecs. An H.264 video is always copied.
 
 ### Limits to know about
 

@@ -28,7 +28,7 @@ Border width is a percentage of the photo’s shorter side, so the same setting 
 
 ### What stays and what changes
 
-The finished image has no camera or location info, because it is drawn as a new picture.
+The finished image is drawn as a new picture, so the original’s camera and location info isn’t copied into it.
 
 ## Privacy
 

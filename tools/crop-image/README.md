@@ -1,6 +1,6 @@
 # Crop image
 
-Crop JPG, PNG, WebP and iPhone HEIC photos in your browser. Drag the crop box or pick a ratio such as 1:1 or 16:9, rotate 90°, flip, and download.
+Crop JPG, PNG, WebP, AVIF, BMP, TIFF and HEIC photos in your browser. Drag the crop box or pick a ratio such as 1:1 or 16:9, rotate, flip, and download.
 
 **Use it online:** https://picway.app/tools/crop-image/
 
@@ -8,7 +8,7 @@ Crop JPG, PNG, WebP and iPhone HEIC photos in your browser. Drag the crop box or
 
 ## How to use it
 
-1. **Choose an image.** Choose one image with the box at the top of the page, or drop it on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work.
+1. **Choose an image.** Choose one image with the box at the top of the page, or drag and drop it into the box. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work.
 2. **Crop, rotate or flip.** Drag the crop box, or drag a corner to resize it. Pick a ratio such as 1:1 or 16:9, or type the width and height in pixels. Use Rotate left, Rotate right, Flip horizontal and Flip vertical to turn the picture.
 3. **Create and download.** Tap Create image. A Download button appears, with the old and new size in pixels and in bytes.
 
@@ -23,7 +23,7 @@ Choose one image and it opens in the editor with the crop box around the whole p
 - **Flip**: Flip horizontal mirrors it left to right; Flip vertical mirrors it top to bottom.
 - **Reset** undoes rotations and flips, puts the crop box back around the whole picture and sets the ratio back to Free.
 
-Nothing is saved until you tap **Create image**. If you change anything after that, the old download disappears so you never save a version you no longer see.
+Nothing is saved until you tap **Create image**. If you change anything after that, the old download is cleared, so create the image again to get the new version.
 
 ### What stays and what changes
 

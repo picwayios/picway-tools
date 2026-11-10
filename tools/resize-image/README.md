@@ -1,6 +1,6 @@
 # Resize images
 
-Resize JPG, PNG, WebP and iPhone HEIC photos in your browser. Set a width and height in pixels or a percentage, keep the aspect ratio, and download them all.
+Resize JPG, PNG, WebP, AVIF, BMP, TIFF and HEIC photos in your browser. Set a width and height in pixels or a percentage, keep the aspect ratio, and download.
 
 **Use it online:** https://picway.app/tools/resize-image/
 
@@ -8,7 +8,7 @@ Resize JPG, PNG, WebP and iPhone HEIC photos in your browser. Set a width and he
 
 ## How to use it
 
-1. **Choose your images.** Choose up to 50 images with the box at the top of the page, or drop them on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work.
+1. **Choose your images.** Choose up to 50 images with the box at the top of the page, or drag and drop them into the box. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work.
 2. **Set the new size.** Type a width, a height or both in pixels, or set “Resize by” to Percentage and type a number such as 50. Leave “Keep the aspect ratio” on so the image is not stretched.
 3. **Download.** Each row shows the old and new pixel size. Download each file, or take them all in one ZIP.
 

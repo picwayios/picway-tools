@@ -8,7 +8,7 @@ Convert PNG to JPG, WebP to JPG, JPG to PNG, AVIF or HEIC to PNG and more in you
 
 ## How to use it
 
-1. **Choose your images.** Choose up to 50 images with the box at the top of the page, or drop them on it. HEIC, JPG, PNG, WebP, AVIF, GIF, BMP and TIFF files all work.
+1. **Choose your images.** Choose up to 50 images with the box at the top of the page, or drag and drop them into the box. HEIC, JPG, PNG, WebP, AVIF, GIF, BMP and TIFF files all work.
 2. **Pick the output format and settings.** Choose the format under “Convert to”. For JPG, WebP and AVIF, set the quality. For JPG and BMP, choose the background color for transparent areas. Leave “Remove location” on if you plan to share the images.
 3. **Download.** Download each converted image, or take them all in one ZIP.
 
