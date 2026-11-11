@@ -5,7 +5,7 @@
     "steps": [
       {
         "name": "Choose an image",
-        "text": "Choose one image with the box above, or drop it on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
+        "text": "Choose one image with the box above, or drag and drop it into the box. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
       },
       {
         "name": "Mark what to hide",
@@ -23,7 +23,7 @@
     "steps": [
       {
         "name": "Choose your images",
-        "text": "Choose up to 50 images with the box above, or drop them on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
+        "text": "Choose up to 50 images with the box above, or drag and drop them into the box. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
       },
       {
         "name": "Pick how much to compress",
@@ -45,7 +45,7 @@
       },
       {
         "name": "Pick the settings",
-        "text": "Balanced keeps the picture sharp. Smallest suits chat and email. Choose the 1080p option (long side up to 1920 pixels) or the 720p option (up to 1280 pixels) to shrink it further."
+        "text": "Balanced aims to keep more picture detail. Smallest suits chat and email. Choose the 1080p option (long side up to 1920 pixels) or the 720p option (up to 1280 pixels) to shrink it further."
       },
       {
         "name": "Compress and download",
@@ -59,7 +59,7 @@
     "steps": [
       {
         "name": "Choose an image",
-        "text": "Choose one image with the box above, or drop it on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
+        "text": "Choose one image with the box above, or drag and drop it into the box. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
       },
       {
         "name": "Crop, rotate or flip",
@@ -113,7 +113,7 @@
     "steps": [
       {
         "name": "Choose your HEIC photos",
-        "text": "Choose up to 50 HEIC photos with the box above, or drop them on it."
+        "text": "Choose up to 50 HEIC photos with the box above, or drag and drop them into the box."
       },
       {
         "name": "Pick the settings",
@@ -131,7 +131,7 @@
     "steps": [
       {
         "name": "Choose your images",
-        "text": "Choose up to 50 images with the box above, or drop them on it. HEIC, JPG, PNG, WebP, AVIF, GIF, BMP and TIFF files all work."
+        "text": "Choose up to 50 images with the box above, or drag and drop them into the box. HEIC, JPG, PNG, WebP, AVIF, GIF, BMP and TIFF files all work."
       },
       {
         "name": "Pick the output format and settings",
@@ -153,7 +153,7 @@
       },
       {
         "name": "Check the video setting",
-        "text": "An H.264 video is copied as it is. For an HEVC video, keep “Re-encode to H.264” to play it almost anywhere (on iPhone and iPad, the page won’t start it if the new file is estimated to be over 300 MB), or choose “Copy the video as it is” for a fast copy."
+        "text": "An H.264 video is copied as it is. For an HEVC video, keep “Re-encode to H.264” so more devices and apps can play it (on iPhone and iPad, the page won’t start it if the new file is estimated to be over 300 MB), or choose “Copy the video as it is” for a fast copy."
       },
       {
         "name": "Convert and download",
@@ -203,7 +203,7 @@
     "steps": [
       {
         "name": "Choose your photos",
-        "text": "Tap the box above and pick JPG or HEIC photos, or drop them on it. The page first lists what each photo contains."
+        "text": "Tap the box above and pick JPG or HEIC photos, or drag and drop them into the box. The page first lists what each photo contains."
       },
       {
         "name": "Choose what to remove",
@@ -221,7 +221,7 @@
     "steps": [
       {
         "name": "Choose your images",
-        "text": "Choose up to 50 images with the box above, or drop them on it. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
+        "text": "Choose up to 50 images with the box above, or drag and drop them into the box. JPG, PNG, WebP, HEIC, AVIF, BMP and TIFF files all work."
       },
       {
         "name": "Set the new size",

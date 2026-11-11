@@ -25,7 +25,7 @@ Every image in the list gets the same setting. With the aspect ratio kept, each 
 
 ### What stays and what changes
 
-Rotated photos come out upright. If the original has a Display P3 color profile, it is kept in JPG, PNG and WebP results, and the row says “Display P3 kept”. The location is removed by default, and **Remove all camera and date info** clears the rest of the EXIF. HEIC, BMP and TIFF files are saved as JPG, and transparent areas get a background color when the result is JPG.
+Rotated photos come out upright. If the original has a Display P3 color profile, it is kept in JPG, PNG and WebP results, and the row says “Display P3 kept”. The location is removed by default, and **Remove all camera and date info** clears the rest of the EXIF. With “Save as” on Same format as the original, HEIC, BMP and TIFF files are saved as JPG; if you pick PNG or WebP, the files are saved in that format instead. Transparent areas get a background color whenever the result is JPG.
 
 ### Limits
 

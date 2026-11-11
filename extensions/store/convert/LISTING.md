@@ -50,7 +50,7 @@ Image converter
 Change an image to JPG, PNG, WebP, AVIF, GIF, BMP or TIFF. It reads HEIC, JPG, PNG, WebP, AVIF, GIF, BMP and TIFF, up to 50 files in the list.
 
 MOV to MP4
-Turn a MOV video into an MP4. An H.264 video is copied as it is (fast, no re-encoding). An HEVC video, the format iPhones record by default, is re-encoded to H.264 so it plays almost anywhere, or you can choose to copy it as it is.
+Turn a MOV video into an MP4. An H.264 video is copied as it is (fast, no re-encoding). An HEVC video, the format iPhones record by default, is re-encoded to H.264 so more devices and apps can play it, or you can choose to copy it as it is.
 
 Video to GIF
 Turn part of a video into an animated GIF. Choose where it starts, how long it is, the frame rate, the width and whether it loops.

@@ -1,7 +1,7 @@
 {
   "name": "picway-extensions",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "PicWay browser extensions for Chrome and Microsoft Edge, built from the tools in this repository.",
   "license": "MIT",

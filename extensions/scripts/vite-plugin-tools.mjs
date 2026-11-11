@@ -36,7 +36,7 @@ const EDITS = {
     ["          mapBox,\n          map.el,\n          attribP,\n          h('p', { class: 'tl-note' }, t('mapNote')),\n", ''],
     ["          h('div', { class: 'tl-row' }, h('label', { class: 'tl-row' }, t('search'), qIn), h('button', { type: 'button', class: 'tl-btn tl-btn--ghost', onclick: search }, t('searchGo'))),\n          results,\n", ''],
     // place search can no longer be reached; keep no request in the code either
-    ["await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&q=${encodeURIComponent(q)}`, { headers: { Accept: 'application/json' } })", "await Promise.reject(new Error('offline'))"],
+    ["await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&q=${encodeURIComponent(q)}`, { headers: { Accept: 'application/json' }, signal: ticket.signal })", "await Promise.reject(new Error('offline'))"],
     ["h('a', { href: 'https://www.openstreetmap.org/copyright', rel: 'noopener' }, t('attrib'))", "t('attrib')"],
   ],
 };
