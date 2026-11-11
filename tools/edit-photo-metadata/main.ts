@@ -1,5 +1,5 @@
 import { getGps, loadDict, readFields, type ExifDict } from '@picway-tools/core/exif.ts';
-import { canDecode } from '@picway-tools/core/decodable.ts';
+import { canDecode } from '@picway-tools/core/decodable.ts'; import { makeLatest } from '@picway-tools/core/latest.ts';
 import { buildEdited, LocationLeakError, MAX_FIELD_CHARS, origLocationState, readBackSaysNone, savedProblem, TooLongError } from '@picway-tools/core/editsave.ts';
 import { convertHeic, looksHeif } from '@picway-tools/core/heic.ts';
 import { readInfo } from '@picway-tools/core/info.ts';
@@ -8,7 +8,7 @@ import { TileMap } from '@picway-tools/core/map.ts';
 import { browserOffset, exifToLocal, localToExif, parseCoordInputs, parseLatLon, validOffset } from '@picway-tools/core/mapmath.ts';
 import { openPhoto } from '@picway-tools/core/opensel.ts';
 import { TaskGate, UrlBag } from '@picway-tools/core/task.ts';
-import { baseName, downloadBlob, dropzone, fmtBytes, h, Hint, hintNodes, makeT, toolHref, type Strings } from '@picway-tools/core/ui.ts';
+import { baseName, dropzone, fmtBytes, h, Hint, hintNodes, makeT, toolHref, type Strings } from '@picway-tools/core/ui.ts'; import { clearOffer, offerDownload } from '@picway-tools/core/offer.ts';
 
 const S: Strings<string> = {
   en: {
@@ -65,6 +65,9 @@ const S: Strings<string> = {
     zoomIn: 'Zoom in',
     zoomOut: 'Zoom out',
     attrib: '© OpenStreetMap contributors',
+    dlLink: 'Download {name}',
+    goConv: 'Image converter',
+    notPhotoOnly: 'This tool works on JPG and HEIC photos.',
   },
   'zh-Hans': {
     pick: '选择一张照片',
@@ -120,6 +123,9 @@ const S: Strings<string> = {
     zoomIn: '放大',
     zoomOut: '缩小',
     attrib: '© OpenStreetMap 贡献者',
+    dlLink: '下载 {name}',
+    goConv: '图片转换',
+    notPhotoOnly: '这个工具处理 JPG 和 HEIC 照片。',
   },
 };
 
@@ -155,9 +161,10 @@ export function mount(host: HTMLElement) {
       },
       ready: (x, bytes) => editor(x, bytes, gate.version),
       fail: (e, notPhoto) =>
-        root.replaceChildren(h('p', { class: 'tl-msg is-error' }, ...(notPhoto ? hintNodes(new Hint(t('notPhoto'), [[t('goBorder'), toolHref('photo-border')]])) : e instanceof Hint ? hintNodes(e) : [t('fail', { e: e instanceof Error ? e.message : String(e) })]))),
+        root.replaceChildren(h('p', { class: 'tl-msg is-error' }, ...(notPhoto ? hintNodes(notPhotoHint()) : e instanceof Hint ? hintNodes(e) : [t('fail', { e: e instanceof Error ? e.message : String(e) })]))),
     });
 
+  const notPhotoHint = () => ((href) => (href ? new Hint(t('notPhoto'), [[t('goConv'), href]]) : new Hint(t('notPhotoOnly'), [])))(toolHref('image-converter'));
   function editor(f: File, bytes: Uint8Array, version: number) {
     const stale = () => gate.version !== version;
     const dict: ExifDict = loadDict(getExifTiff(bytes));
@@ -223,21 +230,25 @@ export function mount(host: HTMLElement) {
 
     const qIn = h('input', { type: 'search', size: 28, 'aria-label': t('search') });
     const results = h('ul', { class: 'tl-results' });
+    const latest = makeLatest();
     const search = async () => {
       const q = qIn.value.trim();
       if (!q) return;
+      const ticket = latest.begin();
       results.replaceChildren(h('li', {}, t('searching')));
       try {
-        const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&q=${encodeURIComponent(q)}`, { headers: { Accept: 'application/json' } });
+        const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&q=${encodeURIComponent(q)}`, { headers: { Accept: 'application/json' }, signal: ticket.signal });
         const j = (await r.json()) as { lat: string; lon: string; display_name: string }[];
+        if (!ticket.current()) return;
         results.replaceChildren(...(j.length ? j.map((x) => h('li', {}, h('button', { type: 'button', class: 'tl-link', onclick: () => place(Number(x.lat), Number(x.lon), true) }, x.display_name))) : [h('li', {}, t('noResult'))]));
       } catch {
+        if (!ticket.current()) return;
         results.replaceChildren(h('li', {}, t('searchFail')));
       }
     };
     qIn.addEventListener('keydown', (e) => e.key === 'Enter' && (e.preventDefault(), search()));
 
-    const dtIn = h('input', { type: 'datetime-local', step: '1', value: exifToLocal(orig.dateTimeOriginal) });
+    const dtIn = h('input', { type: 'datetime-local', step: '1', min: '1900-01-01T00:00:00', max: '9999-12-31T23:59:59', value: exifToLocal(orig.dateTimeOriginal) });
     const tzIn = h('input', { type: 'text', size: 8, placeholder: '+08:00', value: orig.offset ?? '' });
     const tz = browserOffset();
 
@@ -248,9 +259,11 @@ export function mount(host: HTMLElement) {
     const fields = [mk(t('make'), 'make'), mk(t('model'), 'model'), mk(t('artist'), 'artist'), mk(t('caption'), 'description'), mk(t('copyright'), 'copyright')];
 
     const status = h('p', { class: 'tl-msg', role: 'status' });
+    const got = h('span', { class: 'tl-got' });
     const save = h('button', { type: 'button', class: 'tl-btn', onclick: async () => {
      try {
       status.textContent = '';
+      clearOffer(got);
 
       let pinNow: { lat: number; lon: number } | null = null;
       if (!clearLoc) {
@@ -288,7 +301,9 @@ export function mount(host: HTMLElement) {
 
       const what = [back.gps ? `${back.gps.lat.toFixed(5)}, ${back.gps.lon.toFixed(5)}` : readBackSaysNone(back, built.locationUnsure) ? t('none') : '', back.rows.find((r) => r.key === 'DateTimeOriginal')?.value ?? ''].filter(Boolean).join(' · ');
       status.textContent = t('saved', { what }) + ` (${fmtBytes(out.length)})` + (built.droppedXmpIptc ? ' ' + t('xmpDropped') : '') + (built.locationUnsure ? ' ' + t('unsureLoc') : '') + (back.hiddenLoc ? ' ' + t('hiddenKept') : '');
-      downloadBlob(new Blob([out as BlobPart], { type: 'image/jpeg' }), `${baseName(f.name)}-edited.jpg`);
+
+      const name = `${baseName(f.name)}-edited.jpg`;
+      offerDownload({ slot: got, blob: new Blob([out as BlobPart], { type: 'image/jpeg' }), name, label: t('dlLink', { name }), auto: true });
      } catch (e) {
       if (stale()) return;
       status.textContent = t('fail', { e: e instanceof Error ? e.message : String(e) });
@@ -313,11 +328,11 @@ export function mount(host: HTMLElement) {
           h('label', { class: 'tl-row' }, clearBox, t('clearLoc'))),
         sec(t('secTime'),
           h('label', { class: 'tl-row' }, t('dt'), dtIn, h('small', {}, t('original', { v: orig.dateTimeOriginal || t('none') }))),
-          h('label', { class: 'tl-row' }, t('tz'), tzIn, h('button', { type: 'button', class: 'tl-btn tl-btn--ghost', onclick: () => (tzIn.value = tz) }, t('useBrowserTz', { tz }))),
+          h('div', { class: 'tl-row' }, h('label', { class: 'tl-row' }, t('tz'), tzIn), h('button', { type: 'button', class: 'tl-btn tl-btn--ghost', onclick: () => (tzIn.value = tz) }, t('useBrowserTz', { tz }))),
           h('p', { class: 'tl-note' }, t('tzHint')),
           h('p', { class: 'tl-note' }, t('sortNote'))),
         sec(t('secCam'), ...fields.map((x) => x.row)),
-        h('div', { class: 'tl-actions' }, save),
+        h('div', { class: 'tl-actions' }, save, got),
         status));
   }
 }

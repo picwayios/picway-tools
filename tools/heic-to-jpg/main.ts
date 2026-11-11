@@ -1,8 +1,8 @@
 import { convertHeic, HEIC_ACCEPT, looksHeif, type ConvertOptions, type ConvertResult } from '@picway-tools/core/heic.ts';
 import { Reprocessor, type Item } from '@picway-tools/core/reprocess.ts';
 import { UrlBag } from '@picway-tools/core/task.ts';
-import { makeZip } from '@picway-tools/core/zip.ts';
-import { baseName, downloadBlob, dropzone, fmtBytes, h, makeT, tick, Hint, hintNodes, isJpgPng, toolHref, type Strings } from '@picway-tools/core/ui.ts'; import { EXTRA } from './strings.ts';
+import { clearZipOffer, zipAndDownload } from '@picway-tools/core/zipdl.ts';
+import { baseName, downloadBlob, dropzone, fmtBytes, h, makeT, tick, Hint, hintNodes, isJpgPng, toolHref, type Strings } from '@picway-tools/core/ui.ts'; import { EXTRA } from './strings.ts'; import { judgeJpgPng } from '@picway-tools/core/heicgate.ts'; import { REASONS } from '@picway-tools/core/errcode.ts';
 
 const S: Strings<string> = { ...EXTRA,
   en: {
@@ -96,7 +96,7 @@ export function mount(host: HTMLElement) {
 
   const doneList = () => (q.idle ? q.items.filter((r) => r.gen === q.gen && r.out).map((r) => r.out!) : []);
   const sync = () => {
-    zipBtn.hidden = doneList().length < 2;
+    zipBtn.hidden = doneList().length < 2; if (zipBtn.hidden) clearZipOffer(msg);
     clear.hidden = q.items.length === 0;
   };
   const zipBtn = h('button', { class: 'tl-btn', hidden: true, onclick: () => zip() }, t('all'));
@@ -107,15 +107,16 @@ export function mount(host: HTMLElement) {
     const gen = q.gen;
     const outs = doneList();
     if (outs.length < 2) return;
-    const entries = await Promise.all(outs.map(async (d) => ({ name: d.name, data: new Uint8Array(await d.blob.arrayBuffer()) })));
-    if (gen !== q.gen || !q.idle || entries.length < 2) return;
-    downloadBlob(new Blob([makeZip(entries) as BlobPart], { type: 'application/zip' }), 'heic-converted.zip');
+    await zipAndDownload({ outs, zipName: 'heic-converted.zip', msg, host, alive: () => gen === q.gen && q.idle });
   }
 
   async function run(row: Row, o: ConvertOptions) {
     const f = row.f;
     if (f.size > 200 * 1048576) throw new Error(t('tooBig'));
-    if (isJpgPng(f)) throw new Hint(t('already'), [[t('goLoc'), toolHref('remove-photo-location')], [t('goBorder'), toolHref('photo-border')]]);
+
+    const verdict = await judgeJpgPng(new Uint8Array(await f.slice(0, 512).arrayBuffer()), async () => new Uint8Array(await f.arrayBuffer()));
+    if (verdict === 'damaged') throw new Error(makeT(REASONS, host)('damaged'));
+    if (verdict === 'already') throw new Hint(t('already'), [[t('goLoc'), toolHref('remove-photo-location')], [t('goBorder'), toolHref('photo-border')]]);
     if (!(await looksHeif(f))) throw new Error(t('notHeic'));
     await tick();
     return convertHeic(f, { ...o });

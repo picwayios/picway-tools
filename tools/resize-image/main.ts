@@ -3,7 +3,7 @@ import { OUT_EXT, preload } from '@picway-tools/core/convert.ts';
 import { pctChange } from '@picway-tools/core/compress.ts';
 import { Reprocessor, type Item } from '@picway-tools/core/reprocess.ts';
 import { UrlBag } from '@picway-tools/core/task.ts';
-import { makeZip } from '@picway-tools/core/zip.ts';
+import { clearZipOffer, zipAndDownload } from '@picway-tools/core/zipdl.ts';
 import { baseName, downloadBlob, dropzone, fmtBytes, h, makeT, tick, type Strings } from '@picway-tools/core/ui.ts'; import { errCode, REASONS } from '@picway-tools/core/errcode.ts';
 import { EXTRA } from './strings.ts';
 
@@ -152,7 +152,7 @@ export function mount(host: HTMLElement) {
 
   const doneRows = () => (q.idle ? q.items.filter((r) => r.gen === q.gen && r.out) : []);
   const sync = () => {
-    zipBtn.hidden = doneRows().length < 2;
+    zipBtn.hidden = doneRows().length < 2; if (zipBtn.hidden) clearZipOffer(msg);
     clear.hidden = q.items.length === 0;
   };
   const zipBtn = h('button', { class: 'tl-btn', hidden: true, onclick: () => zip() }, t('all'));
@@ -163,9 +163,7 @@ export function mount(host: HTMLElement) {
     const gen = q.gen;
     const outs = doneRows().map((r) => r.out!);
     if (outs.length < 2) return;
-    let entries: { name: string; data: Uint8Array }[]; try { entries = await Promise.all(outs.map(async (d) => ({ name: d.name, data: new Uint8Array(await d.blob.arrayBuffer()) }))); } catch { msg.textContent = t('zipFail'); return; }
-    if (gen !== q.gen || !q.idle || entries.length < 2) return;
-    try { downloadBlob(new Blob([makeZip(entries) as BlobPart], { type: 'application/zip' }), 'resized-images.zip'); msg.textContent = ''; } catch { msg.textContent = t('zipFail'); }
+    await zipAndDownload({ outs, zipName: 'resized-images.zip', msg, host, alive: () => gen === q.gen && q.idle });
   }
 
   class TooBig extends Error {}

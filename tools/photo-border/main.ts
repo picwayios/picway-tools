@@ -2,7 +2,7 @@ import { exportCanvas, loadImage, makeCanvas, type Loaded } from '@picway-tools/
 import { Latest } from '@picway-tools/core/collagestate.ts';
 import { borderLayout, type BorderStyle } from '@picway-tools/core/layout.ts';
 import { exportWithSnapshot } from '@picway-tools/core/exportsnap.ts';
-import { baseName, downloadBlob, dropzone, h, makeT, type Strings } from '@picway-tools/core/ui.ts';
+import { baseName, dropzone, h, makeT, type Strings } from '@picway-tools/core/ui.ts'; import { clearOffer, offerDownload } from '@picway-tools/core/offer.ts';
 
 const S: Strings<string> = {
   en: {
@@ -53,12 +53,13 @@ export function mount(host: HTMLElement) {
   const out = h('canvas', { class: 'tl-canvas' });
   const info = h('p', { class: 'tl-note', role: 'status' });
   const capRow = h('label', { class: 'tl-row', hidden: true }, t('caption'), h('input', { type: 'text', maxLength: 80, oninput: (e: Event) => ((st.caption = (e.target as HTMLInputElement).value), draw()) }));
+  const got = h('span', { class: 'tl-got' });
   const dl = h('button', { class: 'tl-btn', disabled: true, onclick: async () => {
     const cur = img;
     if (!cur) return;
     const snap = { format: st.format, name: `${baseName(cur.name)}-border` };
     const r = build();
-    await exportWithSnapshot(snap, (s) => exportCanvas(r.canvas, s.format, 0.95, r.icc), () => img === cur, downloadBlob);
+    await exportWithSnapshot(snap, (s) => exportCanvas(r.canvas, s.format, 0.95, r.icc), () => img === cur, (b, name) => void offerDownload({ slot: got, blob: b, name, label: `${t('download')} ${name}`, auto: true }));
   } }, t('download'));
   function build() {
     const bmp = img!.bmp;
@@ -80,6 +81,7 @@ export function mount(host: HTMLElement) {
     return { canvas: c.canvas, W: l.W, H: l.H, icc: c.p3 ? img!.icc : null };
   }
   function draw() {
+    clearOffer(got);
     if (!img) return;
     const r = build();
     out.width = r.W;
@@ -114,5 +116,5 @@ export function mount(host: HTMLElement) {
       h('label', { class: 'tl-row' }, t('color'), h('input', { type: 'color', value: '#ffffff', oninput: (e: Event) => ((st.color = (e.target as HTMLInputElement).value), draw()) })),
       capRow,
       h('label', { class: 'tl-row' }, t('format'), sel([['jpeg', 'JPG'], ['png', 'PNG']], (v) => (st.format = v as 'jpeg' | 'png')))),
-    out, info, h('div', { class: 'tl-actions' }, dl));
+    out, info, h('div', { class: 'tl-actions' }, dl, got));
 }

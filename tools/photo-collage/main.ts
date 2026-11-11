@@ -2,7 +2,7 @@ import { exportWithSnapshot } from '@picway-tools/core/exportsnap.ts';
 import { exportCanvas, loadImage, makeCanvas, type Loaded } from '@picway-tools/core/image.ts';
 import { Intake, type Failure } from '@picway-tools/core/collagestate.ts';
 import { fitRect, fitVisible, gridLayout, stripLayout } from '@picway-tools/core/layout.ts';
-import { downloadBlob, dropzone, h, makeT, type Strings } from '@picway-tools/core/ui.ts'; import { EXTRA } from './strings.ts'; import { capOf, overCap, usedItems } from '@picway-tools/core/collagecap.ts';
+import { dropzone, h, makeT, type Strings } from '@picway-tools/core/ui.ts'; import { clearOffer, offerDownload } from '@picway-tools/core/offer.ts'; import { EXTRA } from './strings.ts'; import { capOf, overCap, usedItems } from '@picway-tools/core/collagecap.ts';
 
 const S: Strings<string> = { ...EXTRA,
   en: {
@@ -83,11 +83,12 @@ export function mount(host: HTMLElement) {
   const info = h('p', { class: 'tl-note', role: 'status' });
   const list = h('ul', { class: 'tl-list' });
   let limitNote = ''; const overNote = () => (overCap(intake.items.length, st.mode) ? t('limitGrid', { n: overCap(intake.items.length, st.mode) }) : '');
+  const got = h('span', { class: 'tl-got' });
   const dl = h('button', { class: 'tl-btn', disabled: true, onclick: async () => {
     const r = render(), owner = intake.items;
     if (!r || r.problem) return;
     const snap = { format: st.format, name: st.mode === 'strip' ? 'long-strip' : 'collage' }, quality = st.quality;
-    await exportWithSnapshot(snap, (s) => exportCanvas(r.canvas, s.format, quality, r.icc), () => owner === intake.items, downloadBlob);
+    await exportWithSnapshot(snap, (s) => exportCanvas(r.canvas, s.format, quality, r.icc), () => owner === intake.items, (b, name) => void offerDownload({ slot: got, blob: b, name, label: `${t('download')} ${name}`, auto: true }));
   } }, t('download'));
   const ratioRow = h('label', { class: 'tl-row' }, t('ratio'), sel([['1', '1:1'], ['0.8', '4:5'], ['0.75', '3:4'], ['0.5625', '9:16']], (v) => ((st.ratio = Number(v)), draw())));
   const fitRow = h('label', { class: 'tl-row' }, t('fit'), sel([['cover', t('cover')], ['contain', t('contain')]], (v) => ((st.fit = v as 'cover' | 'contain'), draw())));
@@ -204,6 +205,6 @@ export function mount(host: HTMLElement) {
       h('label', { class: 'tl-row' }, t('gap'), gap), h('label', { class: 'tl-row' }, t('bg'), bg),
       h('label', { class: 'tl-row' }, t('format'), fmt)),
     list, failBox, out, info,
-    h('div', { class: 'tl-actions' }, dl, h('button', { class: 'tl-btn tl-btn--ghost', onclick: clearAll }, t('clear'))));
+    h('div', { class: 'tl-actions' }, dl, got, h('button', { class: 'tl-btn tl-btn--ghost', onclick: clearAll }, t('clear'))));
   draw();
 }

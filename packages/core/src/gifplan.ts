@@ -62,3 +62,5 @@ export function framesBefore(times: number[], from: number, ts: number): number 
   while (from + n < times.length && times[from + n] < ts) n++;
   return n;
 }
+
+export const gifStartPastEnd = (start: number, duration: number) => duration - Math.max(0, start) < 0.1;

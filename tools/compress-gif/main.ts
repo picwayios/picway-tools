@@ -6,7 +6,7 @@ import { TaskGate, UrlBag } from '@picway-tools/core/task.ts';
 import { baseName, dropzone, fmtBytes, h, makeT, tick } from '@picway-tools/core/ui.ts';
 import { S } from './strings.ts';
 
-const isIos = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+import { isIOS as isIos } from '@picway-tools/core/platform.ts';
 const secs = (ms: number) => (Math.round(ms / 100) / 10).toFixed(1);
 const canvas = (w: number, hh: number) => (typeof OffscreenCanvas !== 'undefined' ? new OffscreenCanvas(w, hh) : Object.assign(document.createElement('canvas'), { width: w, height: hh }));
 

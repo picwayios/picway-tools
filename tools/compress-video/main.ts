@@ -68,7 +68,7 @@ const S: Strings<string> = { ...EXTRA,
   },
 };
 
-const isIos = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+import { isIOS as isIos } from '@picway-tools/core/platform.ts';
 const dur = (s: number) => ((r) => `${Math.floor(r / 60)}:${String(r % 60).padStart(2, '0')}`)(Math.round(s));
 
 export function mount(host: HTMLElement) {

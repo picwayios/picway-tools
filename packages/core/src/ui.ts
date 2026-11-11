@@ -69,7 +69,8 @@ import { toolLink } from './toolpages.ts';
 export const toolHref = (id: string) => toolLink(id);
 
 export class Hint extends Error {
-  constructor(message: string, public links: [text: string, href: string][]) { super(message); }
+  links: [text: string, href: string][];
+  constructor(message: string, links: [text: string, href: string][]) { super(message); this.links = links; }
 }
 export function hintNodes(e: Hint): Node[] {
   return [h('span', {}, e.message), h('span', { class: 'tl-links' }, ...e.links.filter(([, href]) => href).flatMap(([text, href], i) => [i ? ' · ' : ' ', h('a', { href }, text)]))];

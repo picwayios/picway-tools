@@ -135,3 +135,24 @@ export async function makeZipBlob(entries: { name: string; blob: Blob }[], now =
   ev.setUint32(16, offset, true);
   return new Blob([...locals, ...(centrals as BlobPart[]), end as BlobPart], { type: 'application/zip' });
 }
+
+export const ZIP_LIMIT_IOS = 300 * 1048576;
+export const ZIP_LIMIT_DESKTOP = 1536 * 1048576;
+export const zipLimit = (ios: boolean): number => (ios ? ZIP_LIMIT_IOS : ZIP_LIMIT_DESKTOP);
+export const zipTooBig = (total: number, ios: boolean): boolean => total > zipLimit(ios);
+
+export type ZipBuild = { ok: true; blob: Blob } | { ok: false; why: 'tooBig'; total: number; limit: number } | { ok: false; why: 'fail' } | { ok: false; why: 'stale' };
+
+export async function buildZip(entries: { name: string; blob: Blob }[], o: { ios: boolean; alive?: () => boolean }): Promise<ZipBuild> {
+  const total = entries.reduce((n, e) => n + e.blob.size, 0);
+  if (zipTooBig(total, o.ios)) return { ok: false, why: 'tooBig', total, limit: zipLimit(o.ios) };
+  const alive = o.alive ?? (() => true);
+  try {
+    const blob = await makeZipBlob(entries, undefined, alive);
+    if (!blob || !alive()) return { ok: false, why: 'stale' };
+    return { ok: true, blob };
+  } catch (e) {
+    console.error(e);
+    return { ok: false, why: 'fail' };
+  }
+}

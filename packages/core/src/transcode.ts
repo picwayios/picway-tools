@@ -33,7 +33,11 @@ export interface Result {
 
   audioOut: boolean;
 }
-export const webcodecsOk = () => typeof VideoEncoder !== 'undefined' && typeof VideoDecoder !== 'undefined' && typeof EncodedVideoChunk !== 'undefined';
+export const webcodecsOk = () => typeof VideoEncoder !== 'undefined' && typeof VideoDecoder !== 'undefined' && typeof EncodedVideoChunk !== 'undefined' && typeof OffscreenCanvas !== 'undefined';
+
+export function needCanvas(scale: boolean, ctx: unknown): void {
+  if (scale && !ctx) throw new Error('encode-unsupported:canvas');
+}
 
 const CHUNK = 8 * 1024 * 1024;
 type AnyBox = any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -143,6 +147,7 @@ export async function transcode(file: File, o: Options): Promise<Result> {
     if ((await VideoEncoder.isConfigSupported(want).catch(() => ({ supported: false }))).supported) encCfg = want;
   }
   if (!(await VideoEncoder.isConfigSupported(encCfg)).supported) throw new Error('encode-unsupported:' + plan.codec);
+  if (plan.w !== meta.w || plan.h !== meta.h) needCanvas(true, typeof OffscreenCanvas !== 'undefined' && new OffscreenCanvas(1, 1).getContext('2d'));
 
   const movieScale = info.timescale || 1;
   const trackOf = (id: number, timescale: number) => {
@@ -192,8 +197,8 @@ export async function transcode(file: File, o: Options): Promise<Result> {
   const encoder = new VideoEncoder({ output: (chunk, m) => { try { muxer.addVideoChunk(chunk, m); } catch (e) { failure = e; } }, error: (e) => (failure = e) });
   encoder.configure(encCfg);
   const scale = plan.w !== meta.w || plan.h !== meta.h;
-  const canvas = scale ? new OffscreenCanvas(plan.w, plan.h) : null;
-  const ctx = canvas?.getContext('2d') ?? null;
+  const canvas = scale && typeof OffscreenCanvas !== 'undefined' ? new OffscreenCanvas(plan.w, plan.h) : null;
+  const ctx = canvas?.getContext('2d') ?? null; needCanvas(scale, ctx);
   let framesOut = 0;
   const total = vPlan ? vPlan.out.size : (v.nb_samples as number);
 

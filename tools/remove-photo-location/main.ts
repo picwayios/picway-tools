@@ -6,7 +6,7 @@ import { looksLikeJpegImage } from '@picway-tools/core/jpeg.ts';
 import { checkLocation } from '@picway-tools/core/location.ts';
 import { Reprocessor, type Item } from '@picway-tools/core/reprocess.ts';
 import { UrlBag } from '@picway-tools/core/task.ts';
-import { makeZip } from '@picway-tools/core/zip.ts';
+import { clearZipOffer, zipAndDownload } from '@picway-tools/core/zipdl.ts';
 import { baseName, downloadBlob, dropzone, fmtBytes, h, Hint, hintNodes, makeT, tick, toolHref, type Strings } from '@picway-tools/core/ui.ts';
 
 const S: Strings<string> = {
@@ -20,7 +20,7 @@ const S: Strings<string> = {
     foundLoc: 'Location: {lat}, {lon}',
     noLoc: 'No location in this photo', maybeLoc: 'No GPS position found, but some data in this photo can’t be checked here, so we can’t say for sure there’s no location.', hiddenLoc: 'No GPS position, but the XMP or IPTC data in this photo holds location info.', unreadable: "Couldn't read this file's info, so we can't say whether it has a location.",
     foundNone: 'No camera or date info found',
-    more: '+ {n} more fields',
+    more: 'Also in the file, not listed here: {n} more.',
     xmp: 'It also has XMP or IPTC data, which can hold place names or captions.',
     after: 'New file',
     verifiedLoc: 'Checked: the new file has no location.',
@@ -40,6 +40,8 @@ const S: Strings<string> = {
     badOut: 'The new file didn’t come out as a complete photo, so it isn’t offered for download. Please report it.',
     unsureLoc: 'We couldn’t fully check the new file, so we can’t confirm it has no location.',
     unsureAll: 'We couldn’t fully check the new file, so we can’t confirm it has no camera, date or location info.',
+    goConv: 'Image converter',
+    notPhotoOnly: 'This tool works on JPG and HEIC photos.',
   },
   'zh-Hans': {
     pick: '选择照片',
@@ -51,7 +53,7 @@ const S: Strings<string> = {
     foundLoc: '位置：{lat}，{lon}',
     noLoc: '这张照片里没有位置信息', maybeLoc: '没有找到 GPS 坐标，但照片里有些数据这里查不了，所以不能确定没有位置。', hiddenLoc: '没有 GPS 坐标，但照片的 XMP 或 IPTC 数据里带着位置信息。', unreadable: '读不出这个文件里的信息，所以不能说它有没有位置。',
     foundNone: '没有找到相机或日期信息',
-    more: '另有 {n} 项',
+    more: '文件里另有 {n} 项，这里没有列出。',
     xmp: '里面还有 XMP 或 IPTC 数据，可能带地名或说明文字。',
     after: '新文件',
     verifiedLoc: '已检查：新文件里没有位置信息。',
@@ -71,6 +73,8 @@ const S: Strings<string> = {
     badOut: '新文件不是一张完整的照片，所以没有提供下载。请反馈给我们。',
     unsureLoc: '新文件没能完全检查，所以不能确定里面没有位置信息。',
     unsureAll: '新文件没能完全检查，所以不能确定里面没有相机、日期或位置信息。',
+    goConv: '图片转换',
+    notPhotoOnly: '这个工具处理 JPG 和 HEIC 照片。',
   },
 };
 
@@ -100,16 +104,14 @@ export function mount(host: HTMLElement) {
 
   const doneList = () => (q.idle ? q.items.filter((r) => r.gen === q.gen && r.out).map((r) => r.out!) : []);
   const sync = () => {
-    zipBtn.hidden = doneList().length < 2;
+    zipBtn.hidden = doneList().length < 2; if (zipBtn.hidden) clearZipOffer(msg);
     clear.hidden = q.items.length === 0;
   };
   const zipBtn = h('button', { class: 'tl-btn', hidden: true, onclick: async () => {
     const gen = q.gen;
     const outs = doneList();
     if (outs.length < 2) return;
-    const entries = await Promise.all(outs.map(async (d) => ({ name: d.name, data: new Uint8Array(await d.blob.arrayBuffer()) })));
-    if (gen !== q.gen || !q.idle || entries.length < 2) return;
-    downloadBlob(new Blob([makeZip(entries) as BlobPart], { type: 'application/zip' }), 'cleaned-photos.zip');
+    await zipAndDownload({ outs, zipName: 'cleaned-photos.zip', msg, host, alive: () => gen === q.gen && q.idle });
   } }, t('all'));
   const clear = h('button', { class: 'tl-btn tl-btn--ghost', hidden: true, onclick: () => (q.clear(), urls.revokeAll(), (list.innerHTML = ''), sync()) }, t('again'));
   const msg = h('p', { class: 'tl-msg', role: 'status' });
@@ -128,7 +130,7 @@ export function mount(host: HTMLElement) {
     if (f.size > 200 * 1048576) throw new Error(t('tooBig'));
     const src = new Uint8Array(await f.arrayBuffer());
     const heic = !isJpeg(src) && (await looksHeif(f));
-    if (!heic && !isJpeg(src)) throw new Hint(t('notPhoto'), [[t('goBorder'), toolHref('photo-border')]]);
+    if (!heic && !isJpeg(src)) { const conv = toolHref('image-converter'); throw conv ? new Hint(t('notPhoto'), [[t('goConv'), conv]]) : new Hint(t('notPhotoOnly'), []); }
     if (!heic && !looksLikeJpegImage(src)) throw new Error(t('badJpeg'));
     if (!heic && !(await canDecode(src))) throw new Error(t('badJpeg'));
     const before = await readInfo(src);

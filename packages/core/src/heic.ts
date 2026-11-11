@@ -1,4 +1,4 @@
-import { readHeifMeta, type HeifMeta } from './isobmff.ts'; import { coded } from './errcode.ts';
+import { readHeifMeta, type HeifMeta } from './isobmff.ts'; import { coded } from './errcode.ts'; import { assertDecodable, asMemoryError, maxPixels, peekSize } from './pixelplan.ts'; import { isIOS } from './platform.ts';
 import { finalizeOutput } from './postprocess.ts';
 
 export interface ConvertOptions {
@@ -37,7 +37,7 @@ export async function looksHeif(file: Blob): Promise<boolean> {
 }
 
 const isP3 = (icc: Uint8Array | null) => !!icc && Array.from(icc.subarray(0, 1200), (c) => (c ? String.fromCharCode(c) : '')).join('').includes('Display P3');
-const MAX_PIXELS = /iPhone|iPad|iPod/.test(navigator.userAgent) ? 16_777_216 : 120_000_000;
+const MAX_PIXELS = maxPixels(isIOS());
 
 async function nativeDecode(file: Blob): Promise<HTMLImageElement | null> {
   const url = URL.createObjectURL(file);
@@ -45,7 +45,9 @@ async function nativeDecode(file: Blob): Promise<HTMLImageElement | null> {
     const img = new Image();
     img.src = url;
     await img.decode();
-    return img.naturalWidth > 0 ? img : null;
+    if (img.naturalWidth > 0) return img;
+    URL.revokeObjectURL(url);
+    return null;
   } catch {
     URL.revokeObjectURL(url);
     return null;
@@ -61,8 +63,9 @@ async function decodeWithLibheif(file: File): Promise<{ width: number; height: n
   const im = imgs[0];
   const width = im.get_width();
   const height = im.get_height();
-  const image = new ImageData(width, height);
-  await new Promise<void>((res, rej) => im.display(image, (r: unknown) => (r ? res() : rej(coded('unreadable', 'HEIC decode failed')))));
+  assertDecodable(width, height);
+  let image: ImageData; try { image = new ImageData(width, height); } catch (e) { throw asMemoryError(e); }
+  try { await new Promise<void>((res, rej) => im.display(image, (r: unknown) => (r ? res() : rej(coded('unreadable', 'HEIC decode failed'))))); } catch (e) { throw asMemoryError(e); }
   return { width, height, image };
 }
 interface LibheifModule {
@@ -73,6 +76,7 @@ const toBlob = (c: HTMLCanvasElement, type: string, q: number) => new Promise<Bl
 export async function convertHeic(file: File, opt: ConvertOptions): Promise<ConvertResult> {
   const src = new Uint8Array(await file.arrayBuffer());
   const meta: HeifMeta = readHeifMeta(src);
+  const peek = peekSize(src); if (peek) assertDecodable(peek[0], peek[1]);
   const mime = opt.format === 'png' ? 'image/png' : 'image/jpeg';
   let out: Uint8Array;
   let width = 0;
@@ -96,8 +100,7 @@ export async function convertHeic(file: File, opt: ConvertOptions): Promise<Conv
     const wantP3 = isP3(meta.icc);
     const ctx = canvas.getContext('2d', wantP3 ? { colorSpace: 'display-p3' } : undefined)!;
     p3Canvas = wantP3 && (ctx.getContextAttributes?.().colorSpace ?? 'srgb') === 'display-p3';
-    ctx.drawImage(img, 0, 0, w, h);
-    URL.revokeObjectURL(img.src);
+    try { ctx.drawImage(img, 0, 0, w, h); } finally { URL.revokeObjectURL(img.src); }
     out = new Uint8Array(await (await toBlob(canvas, mime, opt.quality)).arrayBuffer());
     (width = w), (height = h);
   } else {

@@ -1,7 +1,7 @@
 import { convertImage, DEFAULT_QUALITY, IN_ACCEPT, LOSSY, NEEDS_BACKGROUND, OUT_EXT, OUT_FORMATS, preload, type ConvertOptions, type ConvertResult, type OutFormat } from '@picway-tools/core/convert.ts';
 import { Reprocessor, type Item } from '@picway-tools/core/reprocess.ts';
 import { UrlBag } from '@picway-tools/core/task.ts';
-import { makeZip } from '@picway-tools/core/zip.ts';
+import { clearZipOffer, zipAndDownload } from '@picway-tools/core/zipdl.ts';
 import { baseName, downloadBlob, dropzone, fmtBytes, h, makeT, tick, type Strings } from '@picway-tools/core/ui.ts';
 
 const S: Strings<string> = {
@@ -111,7 +111,7 @@ export function mount(host: HTMLElement) {
 
   const doneList = () => (q.idle ? q.items.filter((r) => r.gen === q.gen && r.out).map((r) => r.out!) : []);
   const sync = () => {
-    zipBtn.hidden = doneList().length < 2;
+    zipBtn.hidden = doneList().length < 2; if (zipBtn.hidden) clearZipOffer(msg);
     clear.hidden = q.items.length === 0;
   };
   const zipBtn = h('button', { class: 'tl-btn', hidden: true, onclick: () => zip() }, t('all'));
@@ -122,9 +122,7 @@ export function mount(host: HTMLElement) {
     const gen = q.gen;
     const outs = doneList();
     if (outs.length < 2) return;
-    const entries = await Promise.all(outs.map(async (d) => ({ name: d.name, data: new Uint8Array(await d.blob.arrayBuffer()) })));
-    if (gen !== q.gen || !q.idle || entries.length < 2) return;
-    downloadBlob(new Blob([makeZip(entries) as BlobPart], { type: 'application/zip' }), 'converted-images.zip');
+    await zipAndDownload({ outs, zipName: 'converted-images.zip', msg, host, alive: () => gen === q.gen && q.idle });
   }
 
   async function run(row: Row, o: ConvertOptions) {

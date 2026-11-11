@@ -6,6 +6,7 @@ import { p3ToSrgbInPlace } from './colour.ts';
 import { pngGetExif, pngSetExif, prepareExif, webpGetMeta, webpSetMeta } from './imgmeta.ts';
 import { tryLoadDict } from './exif.ts';
 import { checkLocation, checkTiffLocation, locationVerdict } from './location.ts';
+import { assertDecodable, asMemoryError, maxPixels, peekSize } from './pixelplan.ts'; import { isIOS } from './platform.ts';
 import { isAnimated, RAW_EXT, sniffKind, structureError, tiffDataCut, type Kind } from './sniff.ts'; import { orientRGBA } from './orient.ts'; import { coded } from './errcode.ts';
 
 export type OutFormat = 'jpeg' | 'png' | 'webp' | 'avif' | 'gif' | 'bmp' | 'tiff';
@@ -58,7 +59,7 @@ export interface ConvertResult {
   downscaled: boolean;
 }
 
-const MAX_PIXELS = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/.test(navigator.userAgent) ? 16_777_216 : 120_000_000;
+const MAX_PIXELS = maxPixels(isIOS());
 
 const CAP: Record<OutFormat, number> = { jpeg: MAX_PIXELS, png: MAX_PIXELS, webp: MAX_PIXELS, avif: Math.min(MAX_PIXELS, 24_000_000), gif: Math.min(MAX_PIXELS, 40_000_000), bmp: Math.min(MAX_PIXELS, 60_000_000), tiff: Math.min(MAX_PIXELS, 40_000_000) };
 
@@ -104,6 +105,7 @@ async function decode(file: File): Promise<Decoded> {
   const bad = structureError(bytes, kind);
   if (bad) throw coded('damaged', `${bad}, so it can’t be converted`);
   const animated = isAnimated(bytes, kind);
+  const size = kind === 'heic' ? null : peekSize(bytes); if (size) assertDecodable(size[0], size[1]);
   let icc: Uint8Array | null = null;
   let exifTiff: Uint8Array | null = null;
   let make: (raw: boolean) => Promise<ImageBitmap>;
@@ -160,7 +162,7 @@ export async function convertImage(file: File, opt: ConvertOptions): Promise<Con
   const carriesIcc = CARRIES_ICC.includes(fmt);
   const srcP3 = hasProfile && isP3(d.icc);
   const mode: 'plain' | 'p3canvas' | 'raw' | 'rawP3' | 'browser' = !hasProfile ? 'plain' : supportsP3Canvas() ? (srcP3 ? 'p3canvas' : 'browser') : carriesIcc ? 'raw' : srcP3 ? 'rawP3' : 'browser';
-  const bitmap = await d.make(mode === 'raw' || mode === 'rawP3');
+  let bitmap: ImageBitmap; try { bitmap = await d.make(mode === 'raw' || mode === 'rawP3'); } catch (e) { throw asMemoryError(e); }
   try {
     if (!bitmap.width || !bitmap.height) throw coded('unreadable', 'the image has no pixels');
     let w = bitmap.width;

@@ -3,7 +3,7 @@ import { OUT_EXT, preload } from '@picway-tools/core/convert.ts';
 import { FitStopped } from '@picway-tools/core/fitsize.ts';
 import { Reprocessor, type Item } from '@picway-tools/core/reprocess.ts';
 import { UrlBag } from '@picway-tools/core/task.ts';
-import { makeZip } from '@picway-tools/core/zip.ts';
+import { clearZipOffer, zipAndDownload } from '@picway-tools/core/zipdl.ts';
 import { baseName, downloadBlob, dropzone, fmtBytes, h, makeT, tick, type Strings } from '@picway-tools/core/ui.ts'; import { errCode, REASONS } from '@picway-tools/core/errcode.ts'; import { EXTRA } from './strings.ts';
 
 const S: Strings<string> = { ...EXTRA,
@@ -162,7 +162,7 @@ export function mount(host: HTMLElement) {
   const doneRows = () => (q.idle ? q.items.filter((r) => r.gen === q.gen && r.out) : []);
   const sync = () => {
     const rows = doneRows();
-    zipBtn.hidden = rows.length < 2;
+    zipBtn.hidden = rows.length < 2; if (zipBtn.hidden) clearZipOffer(msg);
     clear.hidden = q.items.length === 0;
     const from = rows.reduce((n, r) => n + r.f.size, 0);
     const to = rows.reduce((n, r) => n + r.out!.blob.size, 0);
@@ -176,9 +176,7 @@ export function mount(host: HTMLElement) {
     const gen = q.gen;
     const outs = doneRows().map((r) => r.out!);
     if (outs.length < 2) return;
-    let entries: { name: string; data: Uint8Array }[]; try { entries = await Promise.all(outs.map(async (d) => ({ name: d.name, data: new Uint8Array(await d.blob.arrayBuffer()) }))); } catch { msg.textContent = t('zipFail'); return; }
-    if (gen !== q.gen || !q.idle || entries.length < 2) return;
-    try { downloadBlob(new Blob([makeZip(entries) as BlobPart], { type: 'application/zip' }), 'compressed-images.zip'); msg.textContent = ''; } catch { msg.textContent = t('zipFail'); }
+    await zipAndDownload({ outs, zipName: 'compressed-images.zip', msg, host, alive: () => gen === q.gen && q.idle });
   }
 
   async function run(row: Row, o: CompressOptions) {

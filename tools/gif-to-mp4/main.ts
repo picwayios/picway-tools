@@ -6,7 +6,7 @@ import { TaskGate, UrlBag } from '@picway-tools/core/task.ts';
 import { baseName, dropzone, fmtBytes, h, makeT } from '@picway-tools/core/ui.ts';
 import { S } from './strings.ts';
 
-const isIos = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+import { isIOS as isIos } from '@picway-tools/core/platform.ts';
 const SIZES = [0, 1080, 720, 480];
 const PASSES = [1, 2, 3, 5, 10];
 const BGS: Record<string, [number, number, number]> = { white: [255, 255, 255], black: [0, 0, 0] };

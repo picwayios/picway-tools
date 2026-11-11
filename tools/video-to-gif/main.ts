@@ -1,7 +1,7 @@
 import { webcodecsOk, type VideoMeta } from '@picway-tools/core/transcode.ts';
 import { probeFrames } from '@picway-tools/core/remux.ts';
 import { grabFrames } from '@picway-tools/core/framegrab.ts';
-import { GIF_MAX_SECONDS, planGif } from '@picway-tools/core/gifplan.ts';
+import { GIF_MAX_SECONDS, gifStartPastEnd, planGif } from '@picway-tools/core/gifplan.ts';
 import { GifWriter } from '@picway-tools/core/gifwrite.ts';
 import { scanGif } from '@picway-tools/core/gifdecode.ts';
 import { LIMIT_DESKTOP, LIMIT_IOS } from '@picway-tools/core/videoplan.ts';
@@ -9,7 +9,7 @@ import { TaskGate, UrlBag } from '@picway-tools/core/task.ts';
 import { baseName, dropzone, fmtBytes, h, makeT } from '@picway-tools/core/ui.ts';
 import { S } from './strings.ts';
 
-const isIos = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+import { isIOS as isIos } from '@picway-tools/core/platform.ts';
 const dur = (s: number) => ((r) => `${Math.floor(r / 60)}:${String(r % 60).padStart(2, '0')}`)(Math.round(s));
 const LENGTHS = [2, 3, 5, 8, 10, 15, GIF_MAX_SECONDS];
 const FPS = [10, 15, 5];
@@ -68,8 +68,7 @@ export function mount(host: HTMLElement) {
     meta = null;
     idleUi();
     info.textContent = '';
-    from.value = '0';
-    opt.start = 0;
+
     const limit = isIos() ? LIMIT_IOS : LIMIT_DESKTOP;
     if (f.size > limit) return void (msg.textContent = t(isIos() ? 'tooBigIos' : 'tooBig', { size: fmtBytes(f.size), limit: fmtBytes(limit) }));
     msg.textContent = t('probing');
@@ -79,7 +78,7 @@ export function mount(host: HTMLElement) {
       meta = m;
       info.textContent = t('info', { w: m.w, h: m.h, fps: Math.round(m.fps), dur: dur(m.duration), size: fmtBytes(f.size), codec: m.codec });
       from.max = String(Math.max(0, Math.floor(m.duration * 10) / 10));
-      msg.textContent = t('keepOpen');
+      msg.textContent = gifStartPastEnd(opt.start, m.duration) ? t('startPast', { dur: dur(m.duration) }) : t('keepOpen');
       go.disabled = false;
     } catch (e) {
       if (file !== f) return;
@@ -92,6 +91,7 @@ export function mount(host: HTMLElement) {
     const f = file;
     const m = meta;
     if (!f || !m) return;
+    if (gifStartPastEnd(opt.start, m.duration)) return void (msg.textContent = t('startPast', { dur: dur(m.duration) }));
     const task = gate.begin();
     const o = { ...opt };
     const plan = planGif({ w: m.w, h: m.h, rotation: m.rotation, duration: m.duration, start: o.start, length: o.length, fps: o.fps, width: o.width });
@@ -135,7 +135,7 @@ export function mount(host: HTMLElement) {
       msg.textContent = t('done', { from: fmtSec(plan.start), to: fmtSec(plan.end), w: plan.w, h: plan.h, n: plan.times.length, size: fmtBytes(blob.size) });
       out.replaceChildren(
         h('img', { src: url, alt: '', class: 'tl-canvas', width: plan.w, height: plan.h }),
-        h('p', { class: 'tl-note' }, [blob.size > BIG ? t('big', { size: fmtBytes(blob.size) }) : '', m.hasAudio ? t('noSound') : ''].filter(Boolean).join(' ')),
+        h('p', { class: 'tl-note' }, [blob.size > BIG ? t('big', { size: fmtBytes(blob.size) }) : '', m.hasAudio ? t('noSound') : '', o.width > 0 && plan.w < o.width ? t('widthCap', { w: plan.w, want: o.width }) : ''].filter(Boolean).join(' ')),
         h('a', { class: 'tl-btn', href: url, download: name }, t('download', { name })));
     } catch (e) {
       if (gate.version !== task.id) return;

@@ -3,7 +3,7 @@ import type { Strings } from '../lib/ui.ts';
 export type Key =
   | 'pick' | 'hint' | 'from' | 'length' | 'sec' | 'fps' | 'fpsN' | 'width' | 'wN' | 'wOrig' | 'loop' | 'loopForever' | 'loopOnce'
   | 'go' | 'cancel' | 'probing' | 'info' | 'working' | 'checking' | 'done' | 'big' | 'download' | 'noSupport' | 'tooBigIos' | 'tooBig'
-  | 'notVideo' | 'decodeFail' | 'verifyFail' | 'fail' | 'cancelled' | 'keepOpen' | 'privacy' | 'noSound' | 'unsupported' | 'editUnsupported';
+  | 'notVideo' | 'decodeFail' | 'verifyFail' | 'fail' | 'cancelled' | 'keepOpen' | 'privacy' | 'noSound' | 'unsupported' | 'editUnsupported' | 'startPast' | 'widthCap';
 
 export const S: Strings<Key> = {
   en: {
@@ -41,6 +41,8 @@ export const S: Strings<Key> = {
     privacy: 'The video is processed inside your browser, and this page has no server that receives it.',
     noSound: 'GIFs have no sound.',
     unsupported: 'This video is in {codec}, which this page can’t read.',
+    startPast: 'The start time is past the end of this video, which is {dur} long. Choose an earlier start and try again.',
+    widthCap: 'The GIF is {w} pixels wide, not {want}: a GIF is never made wider than the video, and its longer side is kept to 800 pixels.',
   },
   'zh-Hans': {
     pick: '选择一个视频',
@@ -77,6 +79,8 @@ export const S: Strings<Key> = {
     privacy: '视频在你的浏览器里处理，本页没有接收它的服务器。',
     noSound: 'GIF 没有声音。',
     unsupported: '这个视频是 {codec} 格式，本页读不了。',
+    startPast: '起点超出了这个视频的长度（{dur}）。请选一个更早的起点再试。',
+    widthCap: 'GIF 宽 {w} 像素，不是你选的 {want}：GIF 不会比视频更宽，长边也保持在 800 像素以内。',
   },
   'zh-Hant': {
     pick: '選擇一部影片',
@@ -113,6 +117,8 @@ export const S: Strings<Key> = {
     privacy: '影片在你的瀏覽器裡處理，本頁沒有接收它的伺服器。',
     noSound: 'GIF 沒有聲音。',
     unsupported: '這部影片是 {codec} 格式，本頁讀不了。',
+    startPast: '起點超出了這部影片的長度（{dur}）。請選一個更早的起點再試。',
+    widthCap: 'GIF 寬 {w} 像素，不是你選的 {want}：GIF 不會比影片更寬，長邊也保持在 800 像素以內。',
   },
   ja: {
     pick: '動画を選ぶ',
@@ -149,5 +155,7 @@ export const S: Strings<Key> = {
     privacy: '動画はブラウザーの中で処理します。このページには、動画を受け取るサーバーはありません。',
     noSound: 'GIF には音声はありません。',
     unsupported: 'この動画は {codec} 形式のため、このページでは読み込めません。',
+    startPast: '開始位置が動画の長さ（{dur}）を超えています。もっと前の位置を選んでもう一度お試しください。',
+    widthCap: 'GIF の幅は {want} ピクセルではなく {w} ピクセルです。GIF は動画より広くならず、長い辺は 800 ピクセル以内に収めます。',
   },
 };

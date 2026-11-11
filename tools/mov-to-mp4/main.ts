@@ -6,7 +6,7 @@ import { baseName, dropzone, fmtBytes, h, makeT } from '@picway-tools/core/ui.ts
 import { S, S2 } from './strings.ts';
 
 type Mode = 'copy' | 'h264';
-const isIos = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+import { isIOS as isIos } from '@picway-tools/core/platform.ts';
 const dur = (s: number) => ((r) => `${Math.floor(r / 60)}:${String(r % 60).padStart(2, '0')}`)(Math.round(s));
 
 export const outName = (name: string) => `${baseName(name)}${/\.mp4$/i.test(name) ? '-converted' : ''}.mp4`;
