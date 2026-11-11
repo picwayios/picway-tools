@@ -31,7 +31,7 @@ Each folder has its own README with steps, formats and limits.
 You need Node.js 22.6 or later.
 
 ```sh
-git clone https://github.com/picwayapp/picway-tools.git
+git clone https://github.com/picwayios/picway-tools.git
 cd picway-tools
 npm ci
 npm run dev

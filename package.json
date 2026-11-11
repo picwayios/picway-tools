@@ -8,10 +8,10 @@
   "homepage": "https://picway.app/tools/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/picwayapp/picway-tools.git"
+    "url": "git+https://github.com/picwayios/picway-tools.git"
   },
   "bugs": {
-    "url": "https://github.com/picwayapp/picway-tools/issues"
+    "url": "https://github.com/picwayios/picway-tools/issues"
   },
   "type": "module",
   "workspaces": [
